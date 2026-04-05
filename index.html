@@ -162,9 +162,10 @@
           <button class="menu-btn" onclick="goToSlide(8)"><i data-lucide="edit-3"></i> 8. املأ الفراغ</button>
           <button class="menu-btn" onclick="goToSlide(9)"><i data-lucide="target"></i> 9. فرقعة الفقاعات</button>
           <button class="menu-btn" style="border-color: var(--primary); background: #F0FDF4;" onclick="goToSlide(10)"><i data-lucide="spell-check"></i> 10. رتب الحروف</button>
+          <button class="menu-btn" style="border-color: var(--secondary); background: #FFF7ED;" onclick="goToSlide(11)"><i data-lucide="image"></i> 11. صور الأطباق</button>
         </div>
 
-        <button class="nav-btn" onclick="goToSlide(11)" style="width: 100%; margin-top: 25px; font-size: 20px; background: #F59E0B; padding: 15px;"><i data-lucide="award" style="margin-left: 8px;"></i> إنهاء وعرض الشهادة النهائية</button>
+        <button class="nav-btn" onclick="goToSlide(12)" style="width: 100%; margin-top: 25px; font-size: 20px; background: #F59E0B; padding: 15px;"><i data-lucide="award" style="margin-left: 8px;"></i> إنهاء وعرض الشهادة النهائية</button>
       </div>
 
     <div class="slide" id="slide-1">
@@ -189,12 +190,23 @@
 
         <div class="live-text-wrapper">
           <div class="reading-passage" id="reading-passage-content">
-            المطبخ العربي رحلة جميلة! في <span class="hotspot" onclick="activateHotspot(this, 'الإمارات', 'هذا بلدي.', 'الإمارات 🇦🇪', 'uae')">الإمارات</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الهريس', 'هذا طبق إماراتي.', 'الإمارات 🇦🇪', 'harees')">الهريس</span>. وفي <span class="hotspot" onclick="activateHotspot(this, 'السعودية', 'هذا بلد الكرم.', 'السعودية 🇸🇦', 'saudi')">السعودية</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'الكبسة', 'هذا طبق سعودي.', 'السعودية 🇸🇦', 'kabsa')">الكبسة</span>. في <span class="hotspot" onclick="activateHotspot(this, 'مصر', 'هذا بلد الأهرامات.', 'مصر 🇪🇬', 'egypt')">مصر</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الكشري', 'هذا طبق مصري.', 'مصر 🇪🇬', 'koshari')">الكشري</span> اللذيذ. وفي <span class="hotspot" onclick="activateHotspot(this, 'الأردن', 'هذا بلد جميل.', 'الأردن 🇯🇴', 'jordan')">الأردن</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'المنسف', 'هذا طبق أردني.', 'الأردن 🇯🇴', 'mansaf')">المنسف</span>. هل تحب <span class="hotspot" onclick="activateHotspot(this, 'التبولة', 'هذا طبق لبناني.', 'لبنان 🇱🇧', 'tabouleh')">التبولة</span> من <span class="hotspot" onclick="activateHotspot(this, 'لبنان', 'هذا بلد الأرز.', 'لبنان 🇱🇧', 'lebanon')">لبنان</span>؟ أو <span class="hotspot" onclick="activateHotspot(this, 'الكبة', 'هذا طبق سوري.', 'سوريا 🇸🇾', 'kibbeh')">الكبة</span> من <span class="hotspot" onclick="activateHotspot(this, 'سوريا', 'هذا بلد عريق.', 'سوريا 🇸🇾', 'syria')">سوريا</span>؟ في <span class="hotspot" onclick="activateHotspot(this, 'المغرب', 'هذا بلد جميل.', 'المغرب 🇲🇦', 'morocco')">المغرب</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الطاجين', 'هذا طبق مغربي.', 'المغرب 🇲🇦', 'tajine')">الطاجين</span>. وفي <span class="hotspot" onclick="activateHotspot(this, 'الجزائر', 'هذا بلد المليون شهيد.', 'الجزائر 🇩🇿', 'algeria')">الجزائر</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'الكسكس', 'هذا طبق جزائري.', 'الجزائر 🇩🇿', 'couscous')">الكسكس</span>. وما رأيك في <span class="hotspot" onclick="activateHotspot(this, 'البريك', 'هذا طبق تونسي.', 'تونس 🇹🇳', 'brik')">البريك</span> من <span class="hotspot" onclick="activateHotspot(this, 'تونس', 'تونس الخضراء.', 'تونس 🇹🇳', 'tunisia')">تونس</span>؟ أو <span class="hotspot" onclick="activateHotspot(this, 'المندي', 'هذا طبق يمني.', 'اليمن 🇾🇪', 'mandi')">المندي</span> من <span class="hotspot" onclick="activateHotspot(this, 'اليمن', 'اليمن السعيد.', 'اليمن 🇾🇪', 'yemen')">اليمن</span>؟ الطعام يجمعنا بالسعادة!
+            <p><span class="hotspot" onclick="activateHotspot(this, 'التَبُّولة', 'هذا طبقٌ تقليدي لُبناني.', 'لبنان 🇱🇧', 'tabouleh')">التَبُّولة</span>: هذا طبقٌ تقليدي لُبناني.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'المُلوخِية', 'هذا طبقٌ تقليدي مصري.', 'مصر 🇪🇬', 'mloukhiyeh')">المُلوخِية</span>: هذا طبقٌ تقليدي مصري.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'الطاجِن', 'هذا طبقٌ تقليدي مَغرِبي.', 'المغرب 🇲🇦', 'tajine')">الطاجِن</span>: هذا طبقٌ تقليدي مَغرِبي.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'وَرَقْ العِنَب أو اليلنجي', 'هذا طبقٌ تقليدي سوري.', 'سوريا 🇸🇾', 'yalamji')">وَرَقْ العِنَب أو اليلنجي</span>: هذا طبقٌ تقليدي سوري.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'المَقلوبَة', 'هذا طبقٌ تقليدي فِلسطيني.', 'فلسطين 🇵🇸', 'malouba')">المَقلوبَة</span>: هذا طبقٌ تقليدي فِلسطيني.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'الكُبَّة', 'هذا طبقٌ تقليدي جَزائري.', 'الجزائر 🇩🇿', 'kebeh')">الكُبَّة</span>: هذا طبقٌ تقليدي جَزائري.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'البْرِيك', 'هٰذا طَبَقٌ تَقْلِيدِيٌّ تُونِسِي.', 'تونس 🇹🇳', 'brik')">البْرِيك</span>: هٰذا طَبَقٌ تَقْلِيدِيٌّ تُونِسِي.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'المندي', 'هذا طبقٌ تقليدي يَمَني.', 'اليمن 🇾🇪', 'mandi')">المندي</span>: هذا طبقٌ تقليدي يَمَني.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'الهَريس', 'هذا طبقٌ تقليدي إماراتي.', 'الإمارات 🇦🇪', 'harees')">الهَريس</span>: هذا طبقٌ تقليدي إماراتي.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'الكَبْسَة', 'هذا طبقٌ تقليدي سُعودي.', 'السعودية 🇸🇦', 'kabsa')">الكَبْسَة</span>: هذا طبقٌ تقليدي سُعودي.</p>
+            <p><span class="hotspot" onclick="activateHotspot(this, 'المَنسَف', 'هذا طبقٌ تقليدي أُردُني.', 'الأردن 🇯🇴', 'mansaf')">المَنسَف</span>: هذا طبقٌ تقليدي أُردُني.</p>
           </div>
-          
+
           <div class="popup-info" id="popup-info">
             <div class="popup-img" id="popup-img">
-              <i data-lucide="mouse-pointer-click" style="width: 40px; height: 40px;"></i>
+              <img id="popup-image" src="" style="max-width: 140px; max-height: 100px; object-fit: contain; border-radius: 10px; display: none;">
+              <i id="popup-icon" data-lucide="mouse-pointer-click" style="width: 40px; height: 40px;"></i>
             </div>
             <div class="popup-word" id="popup-word">اضغط على كلمة</div>
             <div id="popup-desc" style="color: #64748B; font-size: 16px;">لتتعرف على المزيد!</div>
@@ -461,6 +473,26 @@
       </div>
 
       <div class="slide" id="slide-11">
+        <div class="slide-header"><h2>11. صور الأطباق</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">تأمَّل صور الأطباق العربية الأصيلة واضغط على الصورة للانتقال إلى التالية:</p>
+
+        <div style="background: #F8FAFC; padding: 20px; border-radius: 16px; border: 2px solid #E2E8F0; text-align: center;">
+          <div id="puzzle-name-display" style="font-size: 28px; font-weight: bold; color: var(--primary); margin-bottom: 15px;"></div>
+          <div style="position: relative; display: inline-block; cursor: pointer;" onclick="nextPuzzle()">
+            <img id="puzzle-img" src="" alt="" style="max-width: 100%; max-height: 420px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); display: block;">
+          </div>
+          <div style="margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button class="audio-btn-inline" onclick="prevPuzzle()"><i data-lucide="arrow-right"></i> السابق</button>
+            <span id="puzzle-counter" style="align-self: center; font-size: 18px; color: #64748B;"></span>
+            <button class="audio-btn-inline" onclick="nextPuzzle()"><i data-lucide="arrow-left"></i> التالي</button>
+          </div>
+          <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px;" id="puzzle-dots-row"></div>
+        </div>
+
+        <button class="nav-btn" onclick="goToSlide(12)" style="width: 100%; margin-top: 20px; font-size: 20px; background: #F59E0B;"><i data-lucide="award" style="margin-left: 8px;"></i> الانتقال للشهادة النهائية</button>
+      </div>
+
+      <div class="slide" id="slide-12">
         <div class="slide-header"><h2>الشهادة النهائية</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
         
         <div style="text-align: center; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
@@ -538,6 +570,13 @@
         globalAudio.play().catch(e => console.log(e));
     }
 
+    const dishAudioMap = {
+        'tabouleh': 'tabouleh', 'mloukhiyeh': 'mloukhiyeh', 'tajine': 'tajin',
+        'yalamji': 'yalanji', 'malouba': 'maklouba', 'kebeh': 'kouba',
+        'brik': 'brik', 'mandi': 'mandi', 'harees': 'hariss',
+        'kabsa': 'kabssa', 'mansaf': 'mansaf'
+    };
+
     // -- نظام النقاط والاسم من النافذة المنبثقة --
     let studentName = "";
     let totalScore = 0;
@@ -595,7 +634,7 @@
 
     // -- التنقل بين الشرائح --
     let currentSlideIndex = 0;
-    const totalSlides = 11;
+    const totalSlides = 12;
     const dotsContainer = document.getElementById('dots-container');
     
     for(let i=1; i<=totalSlides; i++) {
@@ -623,8 +662,9 @@
         }
         
         if (index === 4) setTimeout(drawExistingLines, 100);
-        if (index === 9) startBubbleGame(); else stopBubbleGame(); 
-        if (index === 10) initRearrange(); 
+        if (index === 9) startBubbleGame(); else stopBubbleGame();
+        if (index === 10) initRearrange();
+        if (index === 11) initPuzzleActivity();
         
         globalAudio.pause();
         liveTextAudio.pause(); 
@@ -652,13 +692,17 @@
         const imgEl = document.getElementById('popup-image');
         const iconEl = document.getElementById('popup-icon');
         const foodImageUrl = getGithubFoodImageUrl(dishId);
-        
+
         if(foodImageUrl) {
             imgEl.src = foodImageUrl;
             imgEl.onload = function() { imgEl.style.display = 'block'; iconEl.style.display = 'none'; }
             imgEl.onerror = function() { imgEl.style.display = 'none'; iconEl.style.display = 'block'; }
         } else {
             imgEl.style.display = 'none'; iconEl.style.display = 'block';
+        }
+
+        if(dishId && dishAudioMap[dishId]) {
+            playGithubAudio(dishAudioMap[dishId]);
         }
     }
     function playCurrentAudio() { if(currentLiveTextId) playGithubAudio(currentLiveTextId); }
@@ -964,7 +1008,7 @@
     function initRearrange() {
         const containerDiv = document.getElementById('rearrange-container');
         if (currentRearrangeIndex >= rearrangeWords.length) {
-            containerDiv.innerHTML = `<h3 style="color:var(--primary); font-size:28px; margin-bottom:20px;">أحسنت! لقد أتممت نشاط ترتيب الحروف بنجاح.</h3><i data-lucide="check-circle" style="width:80px;height:80px;color:var(--primary);"></i><br><button class="nav-btn" onclick="goToSlide(11)" style="margin-top:20px; font-size:18px;"><i data-lucide="award"></i> الانتقال للشهادة النهائية</button>`;
+            containerDiv.innerHTML = `<h3 style="color:var(--primary); font-size:28px; margin-bottom:20px;">أحسنت! لقد أتممت نشاط ترتيب الحروف بنجاح.</h3><i data-lucide="check-circle" style="width:80px;height:80px;color:var(--primary);"></i><br><button class="nav-btn" onclick="goToSlide(12)" style="margin-top:20px; font-size:18px;"><i data-lucide="award"></i> الانتقال للشهادة النهائية</button>`;
             lucide.createIcons();
             awardPoints('rearrange-game-complete', 50); 
             return;
@@ -1050,6 +1094,62 @@
 
     function resetRearrange() {
         initRearrange();
+    }
+
+    // -- نشاط صور الأطباق (البازل) --
+    const puzzleItems = [
+        { name: 'التَبُّولة',           file: 'puzzle-tabouleh.png' },
+        { name: 'المُلوخِية',           file: 'puzzle-mouloukhiyeh.png' },
+        { name: 'الطاجِن',             file: 'puzzle-tajin.png' },
+        { name: 'الكَبْسَة',            file: 'puzzle-kabssa.png' },
+        { name: 'الهَريس',             file: 'puzzle-hariss.png' },
+        { name: 'المندي',              file: 'puzzle-mandi.png' },
+        { name: 'المَقلوبَة',           file: 'puzzle-makloubeh.png' },
+        { name: 'الكُبَّة',             file: 'puzzle-kebbeh.png' },
+        { name: 'وَرَقْ العِنَب / اليلنجي', file: 'puzzle-yalanji.png' },
+        { name: 'المَنسَف',            file: 'puzzle-manssaf.png' },
+        { name: 'البْرِيك',            file: 'puzzle-brik.png' }
+    ];
+    let currentPuzzleIndex = 0;
+
+    function initPuzzleActivity() {
+        currentPuzzleIndex = 0;
+        renderPuzzle();
+        const dotsRow = document.getElementById('puzzle-dots-row');
+        if (dotsRow) {
+            dotsRow.innerHTML = '';
+            puzzleItems.forEach((_, i) => {
+                const d = document.createElement('div');
+                d.className = 'dot';
+                d.id = 'pdot-' + i;
+                d.style.cursor = 'pointer';
+                d.onclick = () => { currentPuzzleIndex = i; renderPuzzle(); };
+                dotsRow.appendChild(d);
+            });
+        }
+    }
+
+    function renderPuzzle() {
+        const item = puzzleItems[currentPuzzleIndex];
+        const img = document.getElementById('puzzle-img');
+        const nameEl = document.getElementById('puzzle-name-display');
+        const counter = document.getElementById('puzzle-counter');
+        if (img) img.src = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${item.file}`;
+        if (nameEl) nameEl.textContent = item.name;
+        if (counter) counter.textContent = `${currentPuzzleIndex + 1} / ${puzzleItems.length}`;
+        document.querySelectorAll('#puzzle-dots-row .dot').forEach((d, i) => {
+            d.classList.toggle('active', i === currentPuzzleIndex);
+        });
+    }
+
+    function nextPuzzle() {
+        currentPuzzleIndex = (currentPuzzleIndex + 1) % puzzleItems.length;
+        renderPuzzle();
+    }
+
+    function prevPuzzle() {
+        currentPuzzleIndex = (currentPuzzleIndex - 1 + puzzleItems.length) % puzzleItems.length;
+        renderPuzzle();
     }
 
     // -- دوال رفع صورة / التقاط كاميرا / وتحميل الشهادة --
