@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المطبخ العربي - شامل | Bubbles in Arabic</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <style>
+    :root { --primary: #10B981; --primary-hover: #059669; --secondary: #3B82F6; --bg-color: #F0F9FF; --card-bg: #FFFFFF; --text-dark: #1E293B; }
+    body { font-family: 'Almarai', sans-serif; background-color: #E7C97A; margin: 0; padding: 20px; color: var(--text-dark); }
+    .lms-container { max-width: 1100px; margin: 0 auto; background: var(--card-bg); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; min-height: 800px; border: 4px solid #E0F2FE; position: relative;}
+    .header-container { background: linear-gradient(rgba(191, 219, 254, 0.78), rgba(224, 242, 254, 0.78)), url('https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/background.png'); background-repeat: no-repeat; background-position: center center; background-size: cover; text-align: center; padding: 60px 20px 20px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; border-bottom: 4px solid var(--secondary); }
+    .header-container h1 { font-size: 28px; margin: 0; color: #2F4858; background: rgba(255,255,255,0.95); padding: 10px 25px; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.1); }
+    .brand-tag { font-size: 14px; font-weight: bold; color: var(--secondary); margin-top: 10px; background: rgba(255,255,255,0.9); padding: 5px 15px; border-radius: 20px; }
+    .slide-container { flex-grow: 1; padding: 30px; position: relative; overflow-y: auto; max-height: 650px;}
+    .slide { display: none; animation: fadeIn 0.4s ease; } .slide.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .slide-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #BFDBFE; padding-bottom: 10px; margin-bottom: 15px; }
+    .slide-header h2 { margin: 0; color: var(--secondary); font-size: 24px;}
+    .back-menu-btn { background: #F8FAFC; color: var(--secondary); border: 2px solid #BFDBFE; padding: 8px 16px; border-radius: 12px; font-family: inherit; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; font-size: 16px;}
+    .back-menu-btn:hover { background: #EFF6FF; border-color: var(--secondary); transform: scale(1.05); }
+    .instruction { font-size: 18px; color: #64748B; margin-bottom: 20px; font-weight: bold; text-align: center;}
+    .feedback { margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 27px; text-align: center; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+    .menu-btn { background: #fff; border: 3px solid #E2E8F0; padding: 20px 15px; border-radius: 16px; font-size: 20px; font-weight: bold; color: var(--secondary); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 12px; font-family: inherit;}
+    .menu-btn i { width: 35px; height: 35px; color: var(--primary); transition: 0.3s; }
+    .menu-btn:hover { background: #F0FDF4; border-color: var(--primary); color: var(--primary-hover); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.15); }
+    .menu-btn:hover i { transform: scale(1.1); }
+    .check-answer-btn { background: #F59E0B; color: white; border: none; padding: 10px 20px; border-radius: 12px; font-family: inherit; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%; transition: 0.2s;}
+    .check-answer-btn:hover { background: #D97706; }
+    .audio-btn-inline { background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: bold; font-size: 16px;}
+    .audio-btn-inline:hover { background: var(--primary-hover); }
+    .mcq-container { background: #F8FAFC; padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #E2E8F0; }
+    .mcq-container p { font-size: 20px; font-weight: bold; margin-top: 0; }
+    .mcq-btn { display: block; width: 100%; background: #FFF; border: 2px solid #E2E8F0; padding: 12px; border-radius: 12px; font-size: 18px; text-align: right; cursor: pointer; margin-bottom: 10px; font-family: inherit; transition: 0.2s; color: var(--text-dark); font-weight: bold;}
+    .mcq-btn:hover { background: #F1F5F9; } .mcq-btn.correct { background: #D1FAE5 !important; border-color: #10B981 !important; color: #065F46 !important; } .mcq-btn.wrong { background: #FEE2E2 !important; border-color: #EF4444 !important; color: #991B1B !important; }
+    .zones-wrapper { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; justify-content: center;}
+    .sort-zone { flex: 1; min-height: 120px; border: 3px dashed #CBD5E1; border-radius: 16px; padding: 15px; background: #F8FAFC; text-align: center; transition: background 0.2s; min-width: 180px; display: flex; flex-direction: column; align-items: center;}
+    .sort-zone h3 { margin-top: 0; color: var(--secondary); font-size: 20px; border-bottom: 2px solid #E2E8F0; padding-bottom: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;}
+    .draggable { background: white; border: 2px solid var(--secondary); padding: 8px 16px; border-radius: 8px; cursor: grab; font-weight: bold; display: inline-block; margin: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: var(--secondary); transition: transform 0.2s;}
+    .draggable:active { cursor: grabbing; transform: scale(0.95); }
+    .dropped-items-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; min-height: 45px; width: 100%; border-radius: 8px;}
+    .draggables-bank { padding: 15px; background: #F1F5F9; border-radius: 16px; border: 2px solid #E2E8F0; margin-bottom: 20px; text-align: center; min-height: 50px;}
+    .fill-blank-container { font-size: 20px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; background: #FFF; padding: 15px; border-radius: 12px; border: 2px solid #E2E8F0; flex-wrap: wrap;}
+    .blank-slot { width: 130px; height: 45px; border-bottom: 3px dashed var(--secondary); display: inline-flex; align-items: center; justify-content: center; background: #F8FAFC; border-radius: 8px 8px 0 0; }
+    .live-text-wrapper { background: #F8FAFC; padding: 25px; border-radius: 16px; border: 2px solid #E2E8F0; display: flex; gap: 20px; flex-wrap: wrap;}
+    .reading-passage { flex: 2; min-width: 300px; font-size: 24px; line-height: 2.2; color: #1E293B; }
+    .hotspot { background: #DBEAFE; color: #1D4ED8; padding: 2px 8px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; border-bottom: 3px solid #60A5FA; display: inline-block;}
+    .hotspot:hover, .hotspot.active { background: #BFDBFE; transform: translateY(-2px); border-bottom-width: 5px; }
+    .popup-info { flex: 1; min-width: 250px; background: #fff; border: 3px solid var(--secondary); border-radius: 16px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;}
+    .popup-img { width: 120px; height: 120px; background: #E2E8F0; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #94A3B8; overflow: hidden;}
+    .popup-img img { width: 100%; height: 100%; object-fit: cover; }
+    .popup-word { font-size: 28px; color: var(--secondary); font-weight: bold; margin-bottom: 10px; }
+    .match-board-container { position: relative; display: flex; justify-content: space-between; padding: 20px; margin-top: 10px; background: #F8FAFC; border-radius: 16px; border: 2px solid #E2E8F0; user-select: none;}
+    .match-column { display: flex; flex-direction: column; gap: 15px; z-index: 2;}
+    .match-item { background: white; border: 3px solid var(--primary); padding: 12px 20px; border-radius: 12px; font-size: 18px; font-weight: bold; color: var(--text-dark); cursor: pointer; text-align: center; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s;}
+    .match-left::after { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: var(--primary); border-radius: 50%; }
+    .match-right::after { content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; }
+    .match-right { border-color: var(--secondary); }
+    #match-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;}
+    line { stroke-width: 4; stroke-linecap: round; }
+    .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; perspective: 1000px; max-width: 600px; margin: 0 auto;}
+    .memory-card { width: 100%; aspect-ratio: 1; background: transparent; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+    .memory-card.flipped { transform: rotateY(180deg); }
+    .memory-card .front, .memory-card .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 3px solid #E2E8F0; text-align: center; padding: 5px; box-sizing: border-box; overflow: hidden;}
+    .memory-card .back { background: linear-gradient(135deg, var(--secondary), #60A5FA); color: white; transform: rotateY(0deg); }
+    .memory-card .front { background: white; color: var(--text-dark); transform: rotateY(180deg); }
+    .memory-card img { width: 80%; height: 80%; object-fit: contain; border-radius: 8px;}
+    
+    /* Bubble Game Styles */
+    .bubble-game-area { position: relative; width: 100%; height: 450px; background: linear-gradient(to bottom, #87CEEB, #E0F6FF); border-radius: 16px; border: 3px solid var(--secondary); overflow: hidden; box-shadow: inset 0 0 20px rgba(255,255,255,0.5);}
+    .bubble { position: absolute; bottom: -80px; width: 80px; height: 80px; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.4) 60%, rgba(255,255,255,0.1)); border: 1px solid rgba(255,255,255,0.8); border-radius: 50%; box-shadow: inset 0 0 15px rgba(255,255,255,0.8), 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; color: var(--secondary); font-size: 16px; text-align: center; animation: floatUp linear infinite; user-select: none; z-index: 5;}
+    @keyframes floatUp { 0% { transform: translateY(0) scale(1) translateX(0px); opacity: 1; } 100% { transform: translateY(-550px) scale(1.1) translateX(-20px); opacity: 0; } }
+    .bubble.popped { animation: popBubble 0.2s ease-out forwards; pointer-events: none;}
+    @keyframes popBubble { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(0); opacity: 0; } }
+    .dish-modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: flex; align-items: center; justify-content: center; z-index: 10; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(4px);}
+    .dish-modal.show { opacity: 1; pointer-events: auto; }
+    .dish-card { background: white; width: 300px; padding: 30px 20px; border-radius: 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: 4px solid var(--primary); transform: scale(0.8); transition: 0.3s; position: relative;}
+    .dish-modal.show .dish-card { transform: scale(1); }
+    .close-modal-btn { position: absolute; top: 10px; right: 10px; background: #FEE2E2; color: #EF4444; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer;}
+    .dish-card-icon { width: 120px; height: 120px; background: #F1F5F9; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; overflow: hidden;}
+    .dish-card-icon img { width: 100%; height: 100%; object-fit: contain; padding: 5px;}
+    .dish-card h3 { color: var(--text-dark); font-size: 28px; margin: 0 0 10px 0; }
+    .dish-card p { color: #64748B; font-size: 18px; font-weight: bold; margin: 0; padding: 5px 15px; background: #F1F5F9; border-radius: 12px; display: inline-block;}
+
+    .lms-footer { background: #F8FAFC; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #E2E8F0; }
+    .nav-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 99px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s;}
+    .nav-btn:hover { background: var(--primary-hover); transform: scale(1.05); }
+    .progress-dots { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;}
+    .dot { width: 10px; height: 10px; background: #CBD5E1; border-radius: 50%; transition: 0.3s; }
+    .dot.active { background: var(--secondary); transform: scale(1.3); }
+    .gh-img { max-width: 60px; max-height: 60px; border-radius: 8px; object-fit: contain;}
+    
+    /* Score Header Badge styles */
+    .top-badge { position: absolute; top: 15px; background: rgba(255,255,255,0.95); padding: 8px 16px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; gap: 8px; font-weight: bold; z-index: 5;}
+    
+    /* Modal Overlay Styles (Name & Camera) */
+    .name-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(8px); transition: 0.3s; }
+    .name-modal-content { background: white; padding: 40px; border-radius: 24px; text-align: center; max-width: 450px; width: 90%; border: 4px solid var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <div id="name-entry-modal" class="name-modal-overlay">
+    <div class="name-modal-content">
+      <div style="background: #F0FDF4; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+        <i data-lucide="user" style="width: 40px; height: 40px; color: var(--primary);"></i>
+      </div>
+      <h2 style="color: var(--secondary); font-size: 28px; margin-top: 0; margin-bottom: 10px;">أهلاً بك يا بطل!</h2>
+      <p style="color: #64748B; font-size: 18px; margin-bottom: 25px; line-height: 1.5;">يرجى إدخال اسمك للبدء في رحلة المطبخ العربي ولإصدار الشهادة باسمك لاحقاً:</p>
+      
+      <input type="text" id="popup-name-input" placeholder="اكتب اسمك هنا..." style="width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #CBD5E1; font-size: 20px; font-family: inherit; text-align: center; outline: none; margin-bottom: 20px; box-sizing: border-box; font-weight: bold; color: var(--text-dark);">
+      
+      <button class="nav-btn" onclick="saveNameFromPopup()" style="width: 100%; padding: 15px; font-size: 20px; display: flex; justify-content: center; align-items: center; gap: 10px; background: var(--primary);"><i data-lucide="play"></i> ابدأ الأنشطة</button>
+    </div>
+  </div>
+
+  <div id="camera-modal" class="name-modal-overlay" style="display: none; opacity: 0;">
+    <div class="name-modal-content" style="max-width: 500px; padding: 25px;">
+        <h2 style="color: var(--secondary); margin-top: 0; margin-bottom: 15px;">التقاط صورة للشهادة</h2>
+        <div style="width: 100%; max-width: 400px; margin: 0 auto 20px; border-radius: 16px; overflow: hidden; background: #000; border: 4px solid #CBD5E1;">
+            <video id="camera-stream" autoplay playsinline style="width: 100%; height: auto; display: block;"></video>
+        </div>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="nav-btn" onclick="capturePhoto()" style="background: var(--primary); display: inline-flex; align-items: center; gap: 8px;"><i data-lucide="camera"></i> التقاط الصورة</button>
+            <button class="nav-btn" onclick="closeCameraModal()" style="background: #EF4444; display: inline-flex; align-items: center; gap: 8px;"><i data-lucide="x"></i> إلغاء</button>
+        </div>
+    </div>
+  </div>
+
+  <div class="lms-container">
+    <div class="header-container">
+      <div class="top-badge" style="right: 15px; color: var(--secondary);">
+          <i data-lucide="user"></i> <span id="welcome-name">مرحباً يا بطل</span>
+      </div>
+      <div class="top-badge" style="left: 15px; color: #F59E0B;">
+          <i data-lucide="star"></i> النقاط: <span id="score-display">0</span>
+      </div>
+
+      <h1>روائع المطبخ العربي</h1>
+      <div class="brand-tag">Bubbles in Arabic - جميع الأنشطة التفاعلية</div>
+    </div>
+
+    <div class="slide-container">
+      
+      <div class="slide active" id="slide-0">
+        <h2 style="text-align: center; border: none; color: var(--secondary); margin-bottom: 5px;">القائمة الرئيسية</h2>
+        <p class="instruction">اختر النشاط التفاعلي للبدء في رحلة المطبخ العربي:</p>
+        <div class="menu-grid">
+          <button class="menu-btn" onclick="goToSlide(1)"><i data-lucide="book-open"></i> 1. النص التفاعلي</button>
+          <button class="menu-btn" onclick="goToSlide(2)"><i data-lucide="image"></i> 2. مطابقة الصور</button>
+          <button class="menu-btn" onclick="goToSlide(3)"><i data-lucide="map-pin"></i> 3. مطابقة البلدان</button>
+          <button class="menu-btn" onclick="goToSlide(4)"><i data-lucide="git-merge"></i> 4. صل بخط</button>
+          <button class="menu-btn" onclick="goToSlide(5)"><i data-lucide="grid"></i> 5. لعبة الذاكرة</button>
+          <button class="menu-btn" onclick="goToSlide(6)"><i data-lucide="volume-2"></i> 6. استمع واختر</button>
+          <button class="menu-btn" onclick="goToSlide(7)"><i data-lucide="check-circle"></i> 7. صح أم خطأ</button>
+          <button class="menu-btn" onclick="goToSlide(8)"><i data-lucide="edit-3"></i> 8. املأ الفراغ</button>
+          <button class="menu-btn" onclick="goToSlide(9)"><i data-lucide="target"></i> 9. فرقعة الفقاعات</button>
+          <button class="menu-btn" style="border-color: var(--primary); background: #F0FDF4;" onclick="goToSlide(10)"><i data-lucide="spell-check"></i> 10. رتب الحروف</button>
+        </div>
+
+        <button class="nav-btn" onclick="goToSlide(11)" style="width: 100%; margin-top: 25px; font-size: 20px; background: #F59E0B; padding: 15px;"><i data-lucide="award" style="margin-left: 8px;"></i> إنهاء وعرض الشهادة النهائية</button>
+      </div>
+
+    <div class="slide" id="slide-1">
+        <div class="slide-header">
+          <h2>1. النص التفاعلي</h2>
+          <button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button>
+        </div>
+        <p class="instruction">اضغط على الكلمات المظللة لسماع نطقها ومشاهدة صورها:</p>
+
+        <div class="audio-controls-container" style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; background: #FFF; padding: 15px; border-radius: 12px; border: 2px solid #E2E8F0; flex-wrap: wrap;">
+            <button class="audio-btn-inline" onclick="playLiveTextAudio()"><i data-lucide="play"></i> تشغيل القراءة</button>
+            <button class="audio-btn-inline" onclick="pauseLiveTextAudio()"><i data-lucide="pause"></i> إيقاف مؤقت</button>
+            <button class="audio-btn-inline" onclick="continueLiveTextAudio()"><i data-lucide="play-circle"></i> متابعة القراءة</button>
+            <select id="live-text-speed" class="audio-btn-inline" style="background: white; color: var(--text-dark); border: 2px solid var(--primary); cursor: pointer;" onchange="changeLiveTextSpeed(this.value)">
+                <option value="0.5">سرعة: 0.5x</option>
+                <option value="0.75">سرعة: 0.75x</option>
+                <option value="1" selected>سرعة: 1x (طبيعي)</option>
+                <option value="1.25">سرعة: 1.25x</option>
+                <option value="1.5">سرعة: 1.5x</option>
+            </select>
+        </div>
+
+        <div class="live-text-wrapper">
+          <div class="reading-passage" id="reading-passage-content">
+            المطبخ العربي رحلة جميلة! في <span class="hotspot" onclick="activateHotspot(this, 'الإمارات', 'هذا بلدي.', 'الإمارات 🇦🇪', 'uae')">الإمارات</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الهريس', 'هذا طبق إماراتي.', 'الإمارات 🇦🇪', 'harees')">الهريس</span>. وفي <span class="hotspot" onclick="activateHotspot(this, 'السعودية', 'هذا بلد الكرم.', 'السعودية 🇸🇦', 'saudi')">السعودية</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'الكبسة', 'هذا طبق سعودي.', 'السعودية 🇸🇦', 'kabsa')">الكبسة</span>. في <span class="hotspot" onclick="activateHotspot(this, 'مصر', 'هذا بلد الأهرامات.', 'مصر 🇪🇬', 'egypt')">مصر</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الكشري', 'هذا طبق مصري.', 'مصر 🇪🇬', 'koshari')">الكشري</span> اللذيذ. وفي <span class="hotspot" onclick="activateHotspot(this, 'الأردن', 'هذا بلد جميل.', 'الأردن 🇯🇴', 'jordan')">الأردن</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'المنسف', 'هذا طبق أردني.', 'الأردن 🇯🇴', 'mansaf')">المنسف</span>. هل تحب <span class="hotspot" onclick="activateHotspot(this, 'التبولة', 'هذا طبق لبناني.', 'لبنان 🇱🇧', 'tabouleh')">التبولة</span> من <span class="hotspot" onclick="activateHotspot(this, 'لبنان', 'هذا بلد الأرز.', 'لبنان 🇱🇧', 'lebanon')">لبنان</span>؟ أو <span class="hotspot" onclick="activateHotspot(this, 'الكبة', 'هذا طبق سوري.', 'سوريا 🇸🇾', 'kibbeh')">الكبة</span> من <span class="hotspot" onclick="activateHotspot(this, 'سوريا', 'هذا بلد عريق.', 'سوريا 🇸🇾', 'syria')">سوريا</span>؟ في <span class="hotspot" onclick="activateHotspot(this, 'المغرب', 'هذا بلد جميل.', 'المغرب 🇲🇦', 'morocco')">المغرب</span>، نأكل <span class="hotspot" onclick="activateHotspot(this, 'الطاجين', 'هذا طبق مغربي.', 'المغرب 🇲🇦', 'tajine')">الطاجين</span>. وفي <span class="hotspot" onclick="activateHotspot(this, 'الجزائر', 'هذا بلد المليون شهيد.', 'الجزائر 🇩🇿', 'algeria')">الجزائر</span>، نحب <span class="hotspot" onclick="activateHotspot(this, 'الكسكس', 'هذا طبق جزائري.', 'الجزائر 🇩🇿', 'couscous')">الكسكس</span>. وما رأيك في <span class="hotspot" onclick="activateHotspot(this, 'البريك', 'هذا طبق تونسي.', 'تونس 🇹🇳', 'brik')">البريك</span> من <span class="hotspot" onclick="activateHotspot(this, 'تونس', 'تونس الخضراء.', 'تونس 🇹🇳', 'tunisia')">تونس</span>؟ أو <span class="hotspot" onclick="activateHotspot(this, 'المندي', 'هذا طبق يمني.', 'اليمن 🇾🇪', 'mandi')">المندي</span> من <span class="hotspot" onclick="activateHotspot(this, 'اليمن', 'اليمن السعيد.', 'اليمن 🇾🇪', 'yemen')">اليمن</span>؟ الطعام يجمعنا بالسعادة!
+          </div>
+          
+          <div class="popup-info" id="popup-info">
+            <div class="popup-img" id="popup-img">
+              <i data-lucide="mouse-pointer-click" style="width: 40px; height: 40px;"></i>
+            </div>
+            <div class="popup-word" id="popup-word">اضغط على كلمة</div>
+            <div id="popup-desc" style="color: #64748B; font-size: 16px;">لتتعرف على المزيد!</div>
+            <div id="popup-country" style="margin-top: 10px; font-weight: bold; color: var(--primary); font-size: 18px;"></div>
+          </div>
+        </div>
+
+        <button class="nav-btn" onclick="goToSlide(2)" style="width: 100%; margin-top: 20px; font-size: 20px;"><i data-lucide="arrow-left" style="margin-left: 8px;"></i> التالي: مطابقة الصور</button>
+      </div>
+      <div class="slide" id="slide-2">
+        <div class="slide-header"><h2>2. مطابقة الصور</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اسحب اسم الطبق إلى المكان المناسب أسفل الصورة:</p>
+        <div class="draggables-bank" id="bank-2" ondragover="allowDrop(event)" ondrop="drop(event)">
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish1">التبولة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish2">الملوخية</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish3">الطاجن</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish4">الكبسة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish5">الهريس</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish6">المندي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish7">المقلوبة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish8">الكبة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish9">الليلنجي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish10">المنسف</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="v-dish11">البريك</div>
+        </div>
+        <div class="zones-wrapper">
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish1"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/taboula-lebanon.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish2"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mloukhiya-egypt.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish3"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/tajin-morocco.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish4"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kabsa-saudi.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish5"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/harees-uae.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish6"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mandi-yemen.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish7"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/malouba-palestine.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish8"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kebeh-algeria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish9"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yalamji-syria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish10"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mansaf-jordan.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish11"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/brik-tunis.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+        </div>
+        <button class="check-answer-btn" onclick="checkSort('slide-2')">تحقق</button>
+      </div>
+
+      <div class="slide" id="slide-3">
+        <div class="slide-header"><h2>3. مطابقة البلدان</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اسحب اسم الطبق إلى علم البلد المناسب:</p>
+        <div class="draggables-bank" id="bank-3" ondragover="allowDrop(event)" ondrop="drop(event)">
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish1">التبولة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish2">الملوخية</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish3">الطاجن</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish4">الكبسة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish5">الهريس</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish6">المندي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish7">المقلوبة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish8">الكبة</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish9">الليلنجي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish10">المنسف</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish11">البريك</div>
+        </div>
+        <div class="zones-wrapper">
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish1"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/lebanon.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish2"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/egypt.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish3"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/morocco.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish4"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/saudi.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish5"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/uae.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish6"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yemen.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish7"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/palestine.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish8"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/algeria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish9"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/syria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish10"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/jordan.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish11"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/tunis.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+        </div>
+        <button class="check-answer-btn" onclick="checkSort('slide-3')">تحقق</button>
+      </div>
+
+      <div class="slide" id="slide-4">
+        <div class="slide-header"><h2>4. صل بخط</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <div class="match-board-container" id="matchBoard">
+          <svg id="match-svg"></svg>
+          <div class="match-column">
+            <div class="match-item match-left" data-id="1">التبولة</div>
+            <div class="match-item match-left" data-id="2">الملوخية</div>
+            <div class="match-item match-left" data-id="3">الطاجن</div>
+            <div class="match-item match-left" data-id="4">الكبسة</div>
+            <div class="match-item match-left" data-id="5">الهريس</div>
+            <div class="match-item match-left" data-id="6">المندي</div>
+            <div class="match-item match-left" data-id="7">المقلوبة</div>
+            <div class="match-item match-left" data-id="8">الكبة</div>
+            <div class="match-item match-left" data-id="9">الليلنجي</div>
+            <div class="match-item match-left" data-id="10">المنسف</div>
+            <div class="match-item match-left" data-id="11">البريك</div>
+          </div>
+          <div class="match-column">
+            <div class="match-item match-right" data-target="8">الجزائر 🇩🇿</div>
+            <div class="match-item match-right" data-target="1">لبنان 🇱🇧</div>
+            <div class="match-item match-right" data-target="3">المغرب 🇲🇦</div>
+            <div class="match-item match-right" data-target="9">سوريا 🇸🇾</div>
+            <div class="match-item match-right" data-target="4">السعودية 🇸🇦</div>
+            <div class="match-item match-right" data-target="2">مصر 🇪🇬</div>
+            <div class="match-item match-right" data-target="10">الأردن 🇯🇴</div>
+            <div class="match-item match-right" data-target="5">الإمارات 🇦🇪</div>
+            <div class="match-item match-right" data-target="6">اليمن 🇾🇪</div>
+            <div class="match-item match-right" data-target="11">تونس 🇹🇳</div>
+            <div class="match-item match-right" data-target="7">فلسطين 🇵🇸</div>
+          </div>
+        </div>
+        <button class="check-answer-btn" onclick="checkLines()">تحقق من التوصيل</button>
+      </div>
+
+      <div class="slide" id="slide-5">
+        <div class="slide-header"><h2>5. لعبة الذاكرة</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">طابق بين الطبق والبلد الخاص به:</p>
+        <div class="memory-grid" id="memory-game-board"></div>
+        <button class="check-answer-btn" onclick="startMemoryGame()" style="margin-top: 20px;">إعادة اللعب</button>
+      </div>
+
+      <div class="slide" id="slide-6">
+        <div class="slide-header"><h2>6. استمع واختر</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('tabouleh')"><i data-lucide="play-circle"></i> استمع للصوت 1</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الهريس</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">التبولة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المنسف</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('mloukhiyeh')"><i data-lucide="play-circle"></i> استمع للصوت 2</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الملوخية</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المندي</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الطاجن</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('tajine')"><i data-lucide="play-circle"></i> استمع للصوت 3</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المقلوبة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">البريك</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الطاجن</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('kabsa')"><i data-lucide="play-circle"></i> استمع للصوت 4</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الكبة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الكبسة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الليلنجي</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('harees')"><i data-lucide="play-circle"></i> استمع للصوت 5</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الهريس</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">التبولة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الملوخية</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('mandi')"><i data-lucide="play-circle"></i> استمع للصوت 6</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المنسف</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">المندي</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">البريك</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('malouba')"><i data-lucide="play-circle"></i> استمع للصوت 7</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الكبسة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الطاجن</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">المقلوبة</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('kebeh')"><i data-lucide="play-circle"></i> استمع للصوت 8</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الليلنجي</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الكبسة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الكبة</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('yalamji')"><i data-lucide="play-circle"></i> استمع للصوت 9</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المنسف</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">الليلنجي</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">المقلوبة</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('mansaf')"><i data-lucide="play-circle"></i> استمع للصوت 10</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">التبولة</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">المنسف</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">البريك</button>
+        </div>
+        <div class="mcq-container">
+          <p><button class="audio-btn-inline" onclick="playGithubAudio('brik')"><i data-lucide="play-circle"></i> استمع للصوت 11</button></p>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الملوخية</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, false)">الهريس</button>
+          <button class="mcq-btn" onclick="selectMCQ(this, true)">البريك</button>
+        </div>
+      </div>
+
+      <div class="slide" id="slide-7">
+        <div class="slide-header"><h2>7. صح أم خطأ</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <div class="mcq-container"><p>التبولة طبق تقليدي لبناني.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>الملوخية طبق تقليدي مغربي.</p><button class="mcq-btn" onclick="selectMCQ(this, true)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, false)">صح</button></div>
+        <div class="mcq-container"><p>الطاجن طبق تقليدي مغربي.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>الكبسة طبق تقليدي يمني.</p><button class="mcq-btn" onclick="selectMCQ(this, true)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, false)">صح</button></div>
+        <div class="mcq-container"><p>الهريس طبق تقليدي إماراتي.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>المندي طبق تقليدي سعودي.</p><button class="mcq-btn" onclick="selectMCQ(this, true)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, false)">صح</button></div>
+        <div class="mcq-container"><p>المقلوبة طبق تقليدي فلسطيني.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>الكبة طبق تقليدي جزائري.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>الليلنجي طبق تقليدي سوري.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>المنسف طبق تقليدي أردني.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+        <div class="mcq-container"><p>البريك طبق تقليدي تونسي.</p><button class="mcq-btn" onclick="selectMCQ(this, false)">خطأ</button><button class="mcq-btn" onclick="selectMCQ(this, true)">صح</button></div>
+      </div>
+
+      <div class="slide" id="slide-8">
+        <div class="slide-header"><h2>8. املأ الفراغ</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اسحب الكلمة المناسبة لتكملة الجملة:</p>
+        <div class="draggables-bank" id="bank-8" ondragover="allowDrop(event)" ondrop="drop(event)">
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-leb">لبناني</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-egy">مصري</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-mor">مغربي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-sau">سعودي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-uae">إماراتي</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-yem">يمني</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-pal">فلسطيني</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-alg">جزائري</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-syr">سوري</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-jor">أردني</div>
+          <div class="draggable" draggable="true" ondragstart="drag(event)" id="f-tun">تونسي</div>
+        </div>
+        <div class="fill-blank-container">التبولة هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-leb"></div></div>
+        <div class="fill-blank-container">الملوخية هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-egy"></div></div>
+        <div class="fill-blank-container">الطاجن هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-mor"></div></div>
+        <div class="fill-blank-container">الكبسة هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-sau"></div></div>
+        <div class="fill-blank-container">الهريس هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-uae"></div></div>
+        <div class="fill-blank-container">المندي هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-yem"></div></div>
+        <div class="fill-blank-container">المقلوبة هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-pal"></div></div>
+        <div class="fill-blank-container">الكبة هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-alg"></div></div>
+        <div class="fill-blank-container">الليلنجي هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-syr"></div></div>
+        <div class="fill-blank-container">المنسف هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-jor"></div></div>
+        <div class="fill-blank-container">البريك هذا طبق تقليدي <div class="blank-slot dropped-items-container" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="f-tun"></div></div>
+        <button class="check-answer-btn" onclick="checkBlanks('slide-8')">تحقق</button>
+      </div>
+
+      <div class="slide" id="slide-9">
+        <div class="slide-header"><h2>9. فرقعة الفقاعات</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اضغط على الفقاعات المتطايرة قبل أن تختفي!</p>
+        <div class="bubble-game-area" id="bubble-area"></div>
+        <div class="dish-modal" id="dish-modal">
+            <div class="dish-card">
+                <button class="close-modal-btn" onclick="document.getElementById('dish-modal').classList.remove('show')">X</button>
+                <div class="dish-card-icon">
+                    <img id="modal-dish-img" src="" alt="Dish Image" style="display:none;">
+                    <i id="modal-icon" data-lucide="utensils-crossed" style="width: 80px; height: 80px; color: #94A3B8;"></i>
+                </div>
+                <h3 id="modal-dish-name">اسم الطبق</h3>
+                <p id="modal-dish-country">البلد</p>
+                <button class="audio-btn-inline" style="margin-top: 20px; width: 100%; justify-content: center;" id="modal-audio-btn"><i data-lucide="volume-2"></i> استمع</button>
+            </div>
+        </div>
+      </div>
+
+      <div class="slide" id="slide-10">
+        <div class="slide-header"><h2>10. رتب الحروف</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اضغط على الحروف بالترتيب الصحيح لتكوين اسم الطبق الموجود بالصورة:</p>
+        <div id="rearrange-container" style="background: #F8FAFC; padding: 40px 20px; border-radius: 16px; border: 2px solid #E2E8F0; text-align: center; min-height: 250px;">
+          
+          <div id="rearrange-img-container" style="margin-bottom: 20px; height: 160px; display: flex; justify-content: center; align-items: center; background: white; border-radius: 16px; padding: 10px; border: 2px dashed #CBD5E1; max-width: 250px; margin-left: auto; margin-right: auto;">
+             <img id="rearrange-dish-img" src="" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 12px; display: none;">
+             <i id="rearrange-icon-fallback" data-lucide="image" style="width: 60px; height: 60px; color: #94A3B8;"></i>
+          </div>
+
+          <h3 id="rearrange-hint" style="color: var(--secondary); margin-bottom: 30px; font-size: 26px;"></h3>
+          <div id="rearrange-answer" style="min-height: 60px; border-bottom: 4px dashed var(--primary); margin-bottom: 30px; display:flex; gap:10px; justify-content:center; padding:10px; flex-wrap:wrap;"></div>
+          <div id="rearrange-letters" style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;"></div>
+          
+          <button class="check-answer-btn" onclick="resetRearrange()" style="margin-top:40px; width:auto; background: #EF4444; padding: 12px 30px;"><i data-lucide="rotate-ccw" style="margin-left: 8px;"></i> إعادة محاولة هذه الكلمة</button>
+        </div>
+      </div>
+
+      <div class="slide" id="slide-11">
+        <div class="slide-header"><h2>الشهادة النهائية</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        
+        <div style="text-align: center; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            
+            <label for="student-photo-upload" class="nav-btn" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: var(--secondary);">
+                <i data-lucide="image"></i> رفع صورة
+            </label>
+            <input type="file" id="student-photo-upload" accept="image/*" style="display: none;" onchange="previewPhoto(event)">
+            
+            <button class="nav-btn" onclick="openCameraModal()" style="display: inline-flex; align-items: center; gap: 8px; background: #8B5CF6;">
+                <i data-lucide="camera"></i> التقاط بالكاميرا
+            </button>
+
+            <button class="nav-btn" onclick="downloadCertificate()" style="display: inline-flex; align-items: center; gap: 8px; background: var(--primary);">
+                <i data-lucide="download"></i> تحميل الشهادة
+            </button>
+        </div>
+
+        <div id="certificate-content" style="border: 8px solid var(--primary); padding: 40px 20px; text-align: center; border-radius: 20px; background: url('https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/background.png') no-repeat center center; background-size: cover; position:relative; overflow: hidden;">
+            
+            <div style="background: rgba(255, 255, 255, 0.9); padding: 40px 20px; border-radius: 15px; position: relative; z-index: 1;">
+                
+                <div id="cert-photo-container" style="width: 140px; height: 140px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 5px solid var(--primary); display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.15); background: white;">
+                    <img id="cert-photo" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <i data-lucide="award" id="cert-award-icon" style="width: 80px; height: 80px; color: #F59E0B; margin-bottom: 10px;"></i>
+                
+                <h1 style="color: var(--secondary); font-size: 46px; margin-top: 0; margin-bottom: 5px;">شهادة إتمام وتفوق</h1>
+                <h2 style="color: #64748B; font-size: 24px;">تُمنح هذه الشهادة بكل فخر واعتزاز إلى البطل/ة:</h2>
+                
+                <h1 id="cert-name" style="color: var(--primary); font-size: 50px; margin: 20px 0; border-bottom: 4px dashed var(--primary); display:inline-block; padding-bottom:10px; min-width:300px;">...</h1>
+                
+                <h2 style="color: var(--text-dark); font-size: 22px; max-width: 600px; margin: 0 auto; line-height: 1.6;">لإتمامه جميع الأنشطة التفاعلية والتدريبات الخاصة بـ "روائع المطبخ العربي" بنجاح وتميز.</h2>
+                
+                <div style="margin-top: 30px;">
+                    <h3 id="cert-score" style="background: #F59E0B; color: white; display: inline-block; padding: 15px 40px; border-radius: 99px; font-size: 28px; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3); margin: 0;">النقاط المحققة: 0</h3>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="lms-footer" id="footer-nav" style="display: none;">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">السابق</button>
+        <div class="progress-dots" id="dots-container"></div>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">التالي</button>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // --- قسم الصوت ---
+    const globalAudio = new Audio();
+    const liveTextAudio = new Audio('https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/livetext.mp3'); 
+
+    function playLiveTextAudio() { liveTextAudio.currentTime = 0; liveTextAudio.play().catch(e => console.log(e)); }
+    function pauseLiveTextAudio() { liveTextAudio.pause(); }
+    function continueLiveTextAudio() { liveTextAudio.play().catch(e => console.log(e)); }
+    function changeLiveTextSpeed(speed) { liveTextAudio.playbackRate = parseFloat(speed); }
+
+    function playFeedbackAudio(isCorrect) {
+        if(isCorrect) {
+            globalAudio.src = 'https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/ahsant.mp3';
+        } else {
+            globalAudio.src = 'https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/hawelmaraokhra.mp3';
+        }
+        globalAudio.play().catch(e => console.log('Audio error:', e));
+    }
+
+    function playGithubAudio(fileName) {
+        globalAudio.src = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${fileName}.mp3`;
+        globalAudio.play().catch(e => console.log(e));
+    }
+
+    // -- نظام النقاط والاسم من النافذة المنبثقة --
+    let studentName = "";
+    let totalScore = 0;
+    const completedTasks = new Set();
+    let poppedBubblesCount = 0; 
+
+    function saveNameFromPopup() {
+        const input = document.getElementById('popup-name-input').value.trim();
+        if (input) {
+            studentName = input;
+            document.getElementById('cert-name').innerText = studentName;
+            document.getElementById('welcome-name').innerText = "مرحباً: " + studentName;
+            
+            document.getElementById('name-entry-modal').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('name-entry-modal').style.display = 'none';
+            }, 300);
+            
+        } else {
+            alert("يرجى كتابة اسمك للبدء في الأنشطة.");
+        }
+    }
+
+    function awardPoints(taskId, points) {
+        if (!completedTasks.has(taskId)) {
+            completedTasks.add(taskId);
+            totalScore += points;
+            document.getElementById('score-display').innerText = totalScore;
+            document.getElementById('cert-score').innerText = "النقاط المحققة: " + totalScore;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('.mcq-container').forEach((el, i) => { if (!el.id) el.id = 'mcq-q-' + i; });
+    });
+
+    function getGithubCountryImageUrl(countryName) {
+        const map = {
+            "لبنان 🇱🇧": "lebanon.png", "مصر 🇪🇬": "egypt.png", "المغرب 🇲🇦": "morocco.png",
+            "السعودية 🇸🇦": "saudi.png", "الإمارات 🇦🇪": "uae.png", "اليمن 🇾🇪": "yemen.png",
+            "فلسطين 🇵🇸": "palestine.png", "الجزائر 🇩🇿": "algeria.png", "سوريا 🇸🇾": "syria.png",
+            "الأردن 🇯🇴": "jordan.png", "تونس 🇹🇳": "tunis.png"
+        };
+        return map[countryName] ? `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${map[countryName]}` : null;
+    }
+    function getGithubFoodImageUrl(dishId) {
+        const map = {
+            "tabouleh": "taboula-lebanon.png", "mloukhiyeh": "mloukhiya-egypt.png", "tajine": "tajin-morocco.png",
+            "kabsa": "kabsa-saudi.png", "harees": "harees-uae.png", "mandi": "mandi-yemen.png",
+            "malouba": "malouba-palestine.png", "kebeh": "kebeh-algeria.png", "yalamji": "yalamji-syria.png",
+            "mansaf": "mansaf-jordan.png", "brik": "brik-tunis.png"
+        };
+        return map[dishId] ? `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${map[dishId]}` : null;
+    }
+
+    // -- التنقل بين الشرائح --
+    let currentSlideIndex = 0;
+    const totalSlides = 11;
+    const dotsContainer = document.getElementById('dots-container');
+    
+    for(let i=1; i<=totalSlides; i++) {
+        let dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.id = 'dot-' + i;
+        dotsContainer.appendChild(dot);
+    }
+
+    function goToSlide(index) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('slide-' + index).classList.add('active');
+        currentSlideIndex = index;
+        
+        const footer = document.getElementById('footer-nav');
+        if (index === 0) footer.style.display = 'none';
+        else {
+            footer.style.display = 'flex';
+            document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+            if(document.getElementById('dot-' + index)) {
+               document.getElementById('dot-' + index).classList.add('active');
+            }
+            document.getElementById('prevBtn').disabled = (index === 1);
+            document.getElementById('nextBtn').disabled = (index === totalSlides);
+        }
+        
+        if (index === 4) setTimeout(drawExistingLines, 100);
+        if (index === 9) startBubbleGame(); else stopBubbleGame(); 
+        if (index === 10) initRearrange(); 
+        
+        globalAudio.pause();
+        liveTextAudio.pause(); 
+        lucide.createIcons();
+    }
+
+    function changeSlide(direction) {
+        let newIndex = currentSlideIndex + direction;
+        if (newIndex >= 1 && newIndex <= totalSlides) goToSlide(newIndex);
+    }
+
+    // -- النص التفاعلي --
+    let currentLiveTextId = "";
+    function activateHotspot(element, word, desc, country, dishId) {
+        document.querySelectorAll('.hotspot').forEach(h => h.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('popup-word').innerText = word;
+        document.getElementById('popup-desc').innerText = desc;
+        
+        const countryBox = document.getElementById('popup-country');
+        const countryImageUrl = getGithubCountryImageUrl(country);
+        countryBox.innerHTML = countryImageUrl ? `<img src="${countryImageUrl}" alt="${country}" style="max-width: 140px; max-height: 42px; object-fit: contain; border-radius: 8px;">` : `<span style="color: #64748B; font-weight: bold; font-size: 18px;">البلد: ${country}</span>`;
+        
+        currentLiveTextId = dishId;
+        const imgEl = document.getElementById('popup-image');
+        const iconEl = document.getElementById('popup-icon');
+        const foodImageUrl = getGithubFoodImageUrl(dishId);
+        
+        if(foodImageUrl) {
+            imgEl.src = foodImageUrl;
+            imgEl.onload = function() { imgEl.style.display = 'block'; iconEl.style.display = 'none'; }
+            imgEl.onerror = function() { imgEl.style.display = 'none'; iconEl.style.display = 'block'; }
+        } else {
+            imgEl.style.display = 'none'; iconEl.style.display = 'block';
+        }
+    }
+    function playCurrentAudio() { if(currentLiveTextId) playGithubAudio(currentLiveTextId); }
+
+    // -- سحب وإفلات --
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        var targetContainer = ev.target.closest('.dropped-items-container') || ev.target.closest('.draggables-bank');
+        if (targetContainer) targetContainer.appendChild(draggedElement);
+    }
+
+    function checkSort(slideId) {
+        let allCorrect = true;
+        document.getElementById(slideId).querySelectorAll('.sort-zone').forEach(zone => {
+            const targetId = zone.getAttribute('data-target');
+            const items = zone.querySelectorAll('.draggable');
+            items.forEach(item => {
+                if(item.id !== targetId) { allCorrect = false; item.style.borderColor = 'red'; } 
+                else { item.style.borderColor = 'green'; }
+            });
+            if(items.length === 0) allCorrect = false;
+        });
+        playFeedbackAudio(allCorrect);
+        if(allCorrect) awardPoints(slideId + '-sort', 50);
+    }
+
+    function checkBlanks(slideId) {
+        let allCorrect = true;
+        document.getElementById(slideId).querySelectorAll('.blank-slot').forEach(slot => {
+            const targetId = slot.getAttribute('data-target');
+            const item = slot.querySelector('.draggable');
+            if(!item || item.id !== targetId) {
+                allCorrect = false;
+                if(item) item.style.borderColor = 'red';
+            } else {
+                item.style.borderColor = 'green';
+            }
+        });
+        playFeedbackAudio(allCorrect);
+        if(allCorrect) awardPoints(slideId + '-blanks', 50);
+    }
+
+    // -- الاختيار من متعدد --
+    function selectMCQ(btn, isCorrect) {
+        let container = btn.parentElement;
+        if (container.getAttribute('data-answered') === 'true') return;
+
+        let buttons = container.querySelectorAll('.mcq-btn');
+        buttons.forEach(b => { b.classList.remove('correct', 'wrong'); b.style.pointerEvents = 'none'; });
+        
+        container.setAttribute('data-answered', 'true');
+
+        if(isCorrect) {
+            btn.classList.add('correct');
+            awardPoints(container.id, 10);
+        } else {
+            btn.classList.add('wrong');
+            buttons.forEach(b => { if(b.getAttribute('onclick').includes('true')) b.classList.add('correct'); });
+        }
+        playFeedbackAudio(isCorrect);
+    }
+
+    // -- صل بخط --
+    const matchBoard = document.getElementById('matchBoard');
+    const svg = document.getElementById('match-svg');
+    let isDrawing = false;
+    let activeLine = null;
+    let startElement = null;
+    let completedLines = [];
+
+    function getDotPosition(el, isLeft) {
+        const rect = el.getBoundingClientRect();
+        const boardRect = matchBoard.getBoundingClientRect();
+        return {
+            x: isLeft ? (rect.left - boardRect.left) - 6 : (rect.right - boardRect.left) + 6,
+            y: (rect.top - boardRect.top) + (rect.height / 2)
+        };
+    }
+    function startMatch(e) {
+        if(e.target.classList.contains('match-left')) {
+            isDrawing = true;
+            startElement = e.target;
+            completedLines = completedLines.filter(obj => {
+                if(obj.start === startElement) { obj.line.remove(); return false; }
+                return true;
+            });
+            const pos = getDotPosition(startElement, true);
+            activeLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            activeLine.setAttribute('x1', pos.x); activeLine.setAttribute('y1', pos.y);
+            activeLine.setAttribute('x2', pos.x); activeLine.setAttribute('y2', pos.y);
+            activeLine.setAttribute('stroke', '#3B82F6');
+            svg.appendChild(activeLine);
+        }
+    }
+    function drawMatch(e) {
+        if(!isDrawing || !activeLine) return;
+        const boardRect = matchBoard.getBoundingClientRect();
+        let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        activeLine.setAttribute('x2', clientX - boardRect.left);
+        activeLine.setAttribute('y2', clientY - boardRect.top);
+    }
+    function endMatch(e) {
+        if(!isDrawing) return;
+        isDrawing = false;
+        let endElement = document.elementFromPoint(e.changedTouches ? e.changedTouches[0].clientX : e.clientX, e.changedTouches ? e.changedTouches[0].clientY : e.clientY);
+        if(endElement && endElement.classList.contains('match-right')) {
+            const pos = getDotPosition(endElement, false);
+            activeLine.setAttribute('x2', pos.x);
+            activeLine.setAttribute('y2', pos.y);
+            completedLines = completedLines.filter(obj => {
+                if(obj.end === endElement) { obj.line.remove(); return false; }
+                return true;
+            });
+            completedLines.push({ start: startElement, end: endElement, line: activeLine });
+        } else {
+            activeLine.remove();
+        }
+        activeLine = null;
+        startElement = null;
+    }
+    function drawExistingLines() {
+        completedLines.forEach(obj => {
+            const startPos = getDotPosition(obj.start, true);
+            const endPos = getDotPosition(obj.end, false);
+            obj.line.setAttribute('x1', startPos.x); obj.line.setAttribute('y1', startPos.y);
+            obj.line.setAttribute('x2', endPos.x); obj.line.setAttribute('y2', endPos.y);
+        });
+    }
+
+    matchBoard.addEventListener('mousedown', startMatch);
+    matchBoard.addEventListener('mousemove', drawMatch);
+    window.addEventListener('mouseup', endMatch);
+    matchBoard.addEventListener('touchstart', startMatch, {passive: false});
+    matchBoard.addEventListener('touchmove', drawMatch, {passive: false});
+    window.addEventListener('touchend', endMatch);
+    window.addEventListener('resize', drawExistingLines);
+
+    function checkLines() {
+        let allCorrect = true;
+        let linesCount = 0;
+        completedLines.forEach(obj => {
+            linesCount++;
+            let startId = obj.start.getAttribute('data-id');
+            let endTarget = obj.end.getAttribute('data-target');
+            if(startId === endTarget) { obj.line.setAttribute('stroke', '#10B981'); }
+            else { obj.line.setAttribute('stroke', '#EF4444'); allCorrect = false; }
+        });
+        if(linesCount < 11) allCorrect = false;
+        playFeedbackAudio(allCorrect);
+        if(allCorrect && linesCount === 11) awardPoints('lines-match-complete', 50);
+    }
+
+    // -- 5. لعبة الذاكرة --
+    const memoryItems = [
+        { id: "tabouleh", text: "التبولة", match: 1 }, { id: "lebanon", text: "لبنان", match: 1 },
+        { id: "mloukhiyeh", text: "الملوخية", match: 2 }, { id: "egypt", text: "مصر", match: 2 },
+        { id: "tajine", text: "الطاجن", match: 3 }, { id: "morocco", text: "المغرب", match: 3 },
+        { id: "kabsa", text: "الكبسة", match: 4 }, { id: "saudi", text: "السعودية", match: 4 },
+        { id: "harees", text: "الهريس", match: 5 }, { id: "uae", text: "الإمارات", match: 5 },
+        { id: "mandi", text: "المندي", match: 6 }, { id: "yemen", text: "اليمن", match: 6 },
+        { id: "malouba", text: "المقلوبة", match: 7 }, { id: "palestine", text: "فلسطين", match: 7 },
+        { id: "kebeh", text: "الكبة", match: 8 }, { id: "algeria", text: "الجزائر", match: 8 },
+        { id: "yalamji", text: "الليلنجي", match: 9 }, { id: "syria", text: "سوريا", match: 9 },
+        { id: "mansaf", text: "المنسف", match: 10 }, { id: "jordan", text: "الأردن", match: 10 },
+        { id: "brik", text: "البريك", match: 11 }, { id: "tunis", text: "تونس", match: 11 }
+    ];
+    let flippedCards = [];
+    let matchedPairs = 0;
+
+    function startMemoryGame() {
+        const board = document.getElementById('memory-game-board');
+        board.innerHTML = '';
+        flippedCards = [];
+        matchedPairs = 0;
+        let shuffled = [...memoryItems].sort(() => 0.5 - Math.random());
+        shuffled.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.setAttribute('data-match', item.match);
+            card.setAttribute('data-index', index);
+            card.innerHTML = `
+                <div class="front">${item.text}</div>
+                <div class="back"><i data-lucide="help-circle"></i></div>
+            `;
+            card.addEventListener('click', () => flipCard(card));
+            board.appendChild(card);
+        });
+        lucide.createIcons();
+    }
+
+    function flipCard(card) {
+        if(flippedCards.length < 2 && !card.classList.contains('flipped')) {
+            card.classList.add('flipped');
+            flippedCards.push(card);
+            if(flippedCards.length === 2) setTimeout(checkMemoryMatch, 800);
+        }
+    }
+
+    function checkMemoryMatch() {
+        const match1 = flippedCards[0].getAttribute('data-match');
+        const match2 = flippedCards[1].getAttribute('data-match');
+        if(match1 === match2) {
+            playFeedbackAudio(true);
+            flippedCards[0].style.visibility = 'hidden';
+            flippedCards[1].style.visibility = 'hidden';
+            matchedPairs++;
+            
+            awardPoints('memory-pair-' + match1, 10);
+            
+            if(matchedPairs === 11) setTimeout(() => alert('مبروك! اكتملت اللعبة.'), 500);
+        } else {
+            playFeedbackAudio(false);
+            flippedCards[0].classList.remove('flipped');
+            flippedCards[1].classList.remove('flipped');
+        }
+        flippedCards = [];
+    }
+
+    // -- 9. لعبة فرقعة الفقاعات --
+    let bubbleInterval;
+    const bubbleArea = document.getElementById('bubble-area');
+    const dishModal = document.getElementById('dish-modal');
+    const allDishes = [
+        { name: "التبولة", country: "لبنان 🇱🇧", id: "tabouleh" },
+        { name: "الملوخية", country: "مصر 🇪🇬", id: "mloukhiyeh" },
+        { name: "الطاجن", country: "المغرب 🇲🇦", id: "tajine" },
+        { name: "الكبسة", country: "السعودية 🇸🇦", id: "kabsa" },
+        { name: "الهريس", country: "الإمارات 🇦🇪", id: "harees" },
+        { name: "المندي", country: "اليمن 🇾🇪", id: "mandi" },
+        { name: "المقلوبة", country: "فلسطين 🇵🇸", id: "malouba" },
+        { name: "الكبة", country: "الجزائر 🇩🇿", id: "kebeh" },
+        { name: "الليلنجي", country: "سوريا 🇸🇾", id: "yalamji" },
+        { name: "المنسف", country: "الأردن 🇯🇴", id: "mansaf" },
+        { name: "البريك", country: "تونس 🇹🇳", id: "brik" }
+    ];
+
+    function startBubbleGame() {
+        bubbleArea.innerHTML = '';
+        if(bubbleInterval) clearInterval(bubbleInterval);
+        bubbleInterval = setInterval(spawnBubble, 1500);
+    }
+    
+    function stopBubbleGame() {
+        if(bubbleInterval) clearInterval(bubbleInterval);
+        bubbleArea.innerHTML = '';
+    }
+
+    function spawnBubble() {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        const randomDish = allDishes[Math.floor(Math.random() * allDishes.length)];
+        bubble.innerText = randomDish.name;
+        bubble.style.left = `${Math.floor(Math.random() * 80) + 10}%`;
+        bubble.style.animationDuration = `${Math.random() * 3 + 4}s`;
+        
+        bubble.addEventListener('click', () => {
+            bubble.classList.add('popped');
+            playGithubAudio(randomDish.id);
+            
+            if(poppedBubblesCount < 5) {
+                poppedBubblesCount++;
+                awardPoints('bubble-pop-' + poppedBubblesCount, 10);
+            }
+
+            setTimeout(() => { showDishCard(randomDish); bubble.remove(); }, 150); 
+        });
+        bubble.addEventListener('animationend', (e) => { if(e.animationName === 'floatUp') bubble.remove(); });
+        bubbleArea.appendChild(bubble);
+    }
+    
+    function showDishCard(dish) {
+        document.getElementById('modal-dish-name').innerText = dish.name;
+        document.getElementById('modal-dish-country').innerText = "البلد: " + dish.country;
+        const imgEl = document.getElementById('modal-dish-img');
+        const iconEl = document.getElementById('modal-icon');
+        
+        imgEl.src = getGithubFoodImageUrl(dish.id);
+        imgEl.onload = function() { this.style.display = 'block'; iconEl.style.display = 'none'; }
+        imgEl.onerror = function() { this.style.display = 'none'; iconEl.style.display = 'block'; };
+
+        document.getElementById('modal-audio-btn').onclick = function() { playGithubAudio(dish.id); };
+        dishModal.classList.add('show');
+    }
+
+    // -- 10. لعبة ترتيب الحروف (مع إضافة الصور) --
+    const rearrangeWords = [
+        { word: "التبولة", hint: "طبق تقليدي لبناني", id: "tabouleh" },
+        { word: "الطاجن", hint: "طبق تقليدي مغربي", id: "tajine" },
+        { word: "الكبسة", hint: "طبق تقليدي سعودي", id: "kabsa" },
+        { word: "الهريس", hint: "طبق تقليدي إماراتي", id: "harees" },
+        { word: "المندي", hint: "طبق تقليدي يمني", id: "mandi" },
+        { word: "المقلوبة", hint: "طبق تقليدي فلسطيني", id: "malouba" },
+        { word: "الملوخية", hint: "طبق تقليدي مصري", id: "mloukhiyeh" }
+    ];
+    let currentRearrangeIndex = 0;
+    let selectedLetters = [];
+
+    function initRearrange() {
+        const containerDiv = document.getElementById('rearrange-container');
+        if (currentRearrangeIndex >= rearrangeWords.length) {
+            containerDiv.innerHTML = `<h3 style="color:var(--primary); font-size:28px; margin-bottom:20px;">أحسنت! لقد أتممت نشاط ترتيب الحروف بنجاح.</h3><i data-lucide="check-circle" style="width:80px;height:80px;color:var(--primary);"></i><br><button class="nav-btn" onclick="goToSlide(11)" style="margin-top:20px; font-size:18px;"><i data-lucide="award"></i> الانتقال للشهادة النهائية</button>`;
+            lucide.createIcons();
+            awardPoints('rearrange-game-complete', 50); 
+            return;
+        }
+        
+        const targetObj = rearrangeWords[currentRearrangeIndex];
+        document.getElementById('rearrange-hint').innerText = "تلميح: " + targetObj.hint;
+        
+        const imgEl = document.getElementById('rearrange-dish-img');
+        const iconFallback = document.getElementById('rearrange-icon-fallback');
+        const imgUrl = getGithubFoodImageUrl(targetObj.id);
+        
+        if(imgUrl) {
+            imgEl.src = imgUrl;
+            imgEl.onload = () => { imgEl.style.display = 'block'; iconFallback.style.display = 'none'; };
+            imgEl.onerror = () => { imgEl.style.display = 'none'; iconFallback.style.display = 'block'; };
+        } else {
+            imgEl.style.display = 'none'; iconFallback.style.display = 'block';
+        }
+        
+        const lettersDiv = document.getElementById('rearrange-letters');
+        const answerDiv = document.getElementById('rearrange-answer');
+        lettersDiv.innerHTML = '';
+        answerDiv.innerHTML = '';
+        selectedLetters = [];
+        
+        let letters = targetObj.word.split('').sort(() => 0.5 - Math.random());
+        letters.forEach((l) => {
+            let btn = document.createElement('button');
+            btn.innerText = l;
+            btn.className = 'draggable';
+            btn.style.fontSize = '26px';
+            btn.style.padding = '12px 24px';
+            btn.style.cursor = 'pointer';
+            btn.onclick = () => selectLetterForRearrange(l, btn, targetObj);
+            lettersDiv.appendChild(btn);
+        });
+    }
+
+    function selectLetterForRearrange(l, btn, targetObj) {
+        btn.style.visibility = 'hidden'; 
+        const answerDiv = document.getElementById('rearrange-answer');
+        
+        let ansBtn = document.createElement('button');
+        ansBtn.innerText = l;
+        ansBtn.className = 'draggable';
+        ansBtn.style.fontSize = '26px';
+        ansBtn.style.padding = '12px 24px';
+        
+        ansBtn.onclick = () => {
+            ansBtn.remove();
+            btn.style.visibility = 'visible';
+            selectedLetters.splice(selectedLetters.indexOf(l), 1);
+        };
+        
+        answerDiv.appendChild(ansBtn);
+        selectedLetters.push(l);
+        
+        if (selectedLetters.length === targetObj.word.length) {
+            if (selectedLetters.join('') === targetObj.word) {
+                playFeedbackAudio(true);
+                answerDiv.querySelectorAll('button').forEach(b => {
+                    b.style.borderColor = '#10B981';
+                    b.style.backgroundColor = '#D1FAE5';
+                    b.onclick = null; 
+                });
+                
+                setTimeout(() => {
+                    currentRearrangeIndex++;
+                    initRearrange();
+                }, 1200);
+            } else {
+                playFeedbackAudio(false);
+                answerDiv.querySelectorAll('button').forEach(b => {
+                    b.style.borderColor = '#EF4444';
+                    b.style.backgroundColor = '#FEE2E2';
+                });
+                
+                setTimeout(() => { resetRearrange(); }, 1200);
+            }
+        }
+    }
+
+    function resetRearrange() {
+        initRearrange();
+    }
+
+    // -- دوال رفع صورة / التقاط كاميرا / وتحميل الشهادة --
+
+    // قراءة الصورة المرفوعة من الجهاز وعرضها
+    function previewPhoto(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('cert-photo').src = e.target.result;
+                document.getElementById('cert-photo-container').style.display = 'block';
+                document.getElementById('cert-award-icon').style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // ميزات فتح الكاميرا المباشرة داخل المتصفح
+    let videoStream = null;
+
+    function openCameraModal() {
+        const modal = document.getElementById('camera-modal');
+        const video = document.getElementById('camera-stream');
+        
+        modal.style.display = 'flex';
+        setTimeout(() => modal.style.opacity = '1', 10);
+
+        // طلب صلاحية الوصول للكاميرا
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(stream => {
+                videoStream = stream;
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Camera access error:", err);
+                alert("للأسف تعذر الوصول إلى الكاميرا. يرجى التأكد من إعطاء الصلاحيات لمتصفحك.");
+                closeCameraModal();
+            });
+    }
+
+    function closeCameraModal() {
+        const modal = document.getElementById('camera-modal');
+        modal.style.opacity = '0';
+        setTimeout(() => modal.style.display = 'none', 300);
+        
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+            videoStream = null;
+        }
+    }
+
+    function capturePhoto() {
+        const video = document.getElementById('camera-stream');
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext('2d');
+        
+        // عكس الصورة أفقيًا لتظهر كالمرآة
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // تحويلها لـ Base64 وعرضها في الشهادة
+        const dataUrl = canvas.toDataURL('image/png');
+        document.getElementById('cert-photo').src = dataUrl;
+        document.getElementById('cert-photo-container').style.display = 'block';
+        document.getElementById('cert-award-icon').style.display = 'none';
+        
+        closeCameraModal();
+    }
+
+    // تحميل الشهادة كصورة PNG
+    function downloadCertificate() {
+        const certElement = document.getElementById('certificate-content');
+        const btn = event.currentTarget;
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i data-lucide="loader" class="spin"></i> جاري التحميل...';
+        lucide.createIcons();
+
+        html2canvas(certElement, {
+            useCORS: true,
+            scale: 2,
+            backgroundColor: null
+        }).then(canvas => {
+            const link = document.createElement('a');
+            const safeName = studentName ? studentName.replace(/\s+/g, '_') : 'طالب';
+            link.download = `شهادة_المطبخ_العربي_${safeName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            btn.innerHTML = originalHtml;
+        }).catch(err => {
+            console.error("Error generating certificate:", err);
+            alert("حدث خطأ أثناء تحميل الشهادة. يرجى المحاولة مرة أخرى.");
+            btn.innerHTML = originalHtml;
+        });
+    }
+
+    // تهيئة اللعبة في البداية
+    startMemoryGame(); 
+  </script>
+</body>
+</html>
