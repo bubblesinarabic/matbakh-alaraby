@@ -482,8 +482,12 @@
         <p class="instruction">اسحب قطع الصورة وضعها في المكان الصحيح لتكتمل الصورة:</p>
 
         <div style="background: #F8FAFC; padding: 16px; border-radius: 16px; border: 2px solid #E2E8F0; text-align: center;">
-          <div id="puzzle-title" style="font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 6px;"></div>
-          <div id="puzzle-counter" style="font-size: 16px; color: #64748B; margin-bottom: 14px;"></div>
+          <div id="puzzle-title" style="font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 4px;"></div>
+          <div style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 12px;">
+            <span id="puzzle-counter" style="font-size: 15px; color: #64748B;"></span>
+            <span style="background: var(--primary); color: white; padding: 4px 16px; border-radius: 99px; font-size: 15px; font-weight: bold;">القطع الصحيحة: <span id="puzzle-piece-score">0</span> / 9</span>
+            <span style="background: #F59E0B; color: white; padding: 4px 16px; border-radius: 99px; font-size: 15px; font-weight: bold;">النقاط: <span id="puzzle-total-score">0</span></span>
+          </div>
 
           <div style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
             <div>
@@ -1132,9 +1136,41 @@
 
     const PUZZLE_COLS = 3, PUZZLE_ROWS = 3, PUZZLE_PIECE_SIZE = 100;
     let draggedPieceEl = null;
+    let puzzleTotalScore = 0;
+    const puzzleCompletedSet = new Set();
+
+    // Web Audio sound effects
+    const puzzleAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playPuzzleSnapSound(correct) {
+        try {
+            const osc = puzzleAudioCtx.createOscillator();
+            const gain = puzzleAudioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(puzzleAudioCtx.destination);
+            const now = puzzleAudioCtx.currentTime;
+            if (correct) {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(660, now);
+                osc.frequency.exponentialRampToValueAtTime(1100, now + 0.12);
+                gain.gain.setValueAtTime(0.28, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                osc.start(now); osc.stop(now + 0.22);
+            } else {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(380, now);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+                osc.start(now); osc.stop(now + 0.07);
+            }
+        } catch(err) {}
+    }
 
     function initPuzzleActivity() {
         currentPuzzleIndex = 0;
+        puzzleTotalScore = 0;
+        puzzleCompletedSet.clear();
+        document.getElementById('puzzle-total-score').textContent = 0;
         loadPuzzleGame(0);
     }
 
@@ -1146,6 +1182,7 @@
         document.getElementById('puzzle-title').textContent = item.name;
         document.getElementById('puzzle-counter').textContent = `${index + 1} / ${puzzleItems.length}`;
         document.getElementById('puzzle-success').style.display = 'none';
+        document.getElementById('puzzle-piece-score').textContent = 0;
 
         // Shuffle piece IDs
         const ids = Array.from({length: total}, (_, i) => i);
@@ -1154,12 +1191,10 @@
             [ids[i], ids[j]] = [ids[j], ids[i]];
         }
 
-        // Render bank with shuffled pieces
         const bank = document.getElementById('puzzle-bank');
         bank.innerHTML = '';
         ids.forEach(id => bank.appendChild(makePuzzlePiece(id, imgUrl)));
 
-        // Render empty slots
         const grid = document.getElementById('puzzle-grid');
         grid.innerHTML = '';
         for (let i = 0; i < total; i++) {
@@ -1197,10 +1232,13 @@
         const existingPiece = slot.querySelector('.puzzle-piece');
 
         if (existingPiece && existingPiece !== draggedPieceEl) {
-            // Swap: send existing piece back where the dragged piece came from
             sourceParent.appendChild(existingPiece);
         }
         slot.appendChild(draggedPieceEl);
+
+        const isCorrect = parseInt(draggedPieceEl.dataset.pieceId) === parseInt(slot.dataset.slotId);
+        playPuzzleSnapSound(isCorrect);
+        updatePuzzlePieceScore();
         checkPuzzleComplete();
     }
 
@@ -1208,22 +1246,33 @@
         e.preventDefault();
         if (!draggedPieceEl) return;
         document.getElementById('puzzle-bank').appendChild(draggedPieceEl);
+        playPuzzleSnapSound(false);
+        updatePuzzlePieceScore();
+    }
+
+    function updatePuzzlePieceScore() {
+        const slots = document.querySelectorAll('#puzzle-grid .puzzle-slot');
+        let correct = 0;
+        slots.forEach(slot => {
+            const piece = slot.querySelector('.puzzle-piece');
+            if (piece && parseInt(piece.dataset.pieceId) === parseInt(slot.dataset.slotId)) correct++;
+        });
+        document.getElementById('puzzle-piece-score').textContent = correct;
+        return correct;
     }
 
     function checkPuzzleComplete() {
-        const slots = document.querySelectorAll('#puzzle-grid .puzzle-slot');
-        let allCorrect = true;
-        slots.forEach(slot => {
-            const piece = slot.querySelector('.puzzle-piece');
-            if (!piece || parseInt(piece.dataset.pieceId) !== parseInt(slot.dataset.slotId)) {
-                allCorrect = false;
-            }
-        });
-        if (allCorrect) {
+        const correct = updatePuzzlePieceScore();
+        if (correct === PUZZLE_COLS * PUZZLE_ROWS) {
             document.querySelectorAll('#puzzle-grid .puzzle-piece').forEach(p => p.classList.add('correct'));
             document.getElementById('puzzle-success').style.display = 'block';
             playFeedbackAudio(true);
-            awardPoints('puzzle-' + currentPuzzleIndex, 10);
+            if (!puzzleCompletedSet.has(currentPuzzleIndex)) {
+                puzzleCompletedSet.add(currentPuzzleIndex);
+                puzzleTotalScore += 10;
+                document.getElementById('puzzle-total-score').textContent = puzzleTotalScore;
+                awardPoints('puzzle-' + currentPuzzleIndex, 10);
+            }
         }
     }
 
