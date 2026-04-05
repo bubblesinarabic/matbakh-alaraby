@@ -99,6 +99,13 @@
     .dot { width: 10px; height: 10px; background: #CBD5E1; border-radius: 50%; transition: 0.3s; }
     .dot.active { background: var(--secondary); transform: scale(1.3); }
     .gh-img { max-width: 60px; max-height: 60px; border-radius: 8px; object-fit: contain;}
+    .draggable.image-draggable { padding: 6px; background: #fff; }
+    .draggable.image-draggable img { width: 72px; height: 72px; object-fit: contain; display: block; border-radius: 10px; }
+    .match-item.image-match { padding: 8px; min-width: 110px; min-height: 96px; display: flex; align-items: center; justify-content: center; }
+    .match-item.image-match img { width: 86px; height: 86px; object-fit: contain; border-radius: 10px; }
+    #puzzle-grid, #puzzle-bank { direction: ltr; }
+    .puzzle-hint-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+    .puzzle-hint-thumb { width: 92px; height: 92px; object-fit: contain; background: #fff; border: 2px dashed #CBD5E1; border-radius: 12px; padding: 6px; }
     
     /* Score Header Badge styles */
     .top-badge { position: absolute; top: 15px; background: rgba(255,255,255,0.95); padding: 8px 16px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; gap: 8px; font-weight: bold; z-index: 5;}
@@ -242,11 +249,11 @@
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish2"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mloukhiya-egypt.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish3"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/tajin-morocco.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish4"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kabsa-saudi.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
-          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish5"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/harees-uae.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish5"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/hriss-uae.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish6"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mandi-yemen.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish7"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/malouba-palestine.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish8"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kebeh-algeria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
-          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish9"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yalamji-syria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
+          <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish9"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yalanji-syria.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish10"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mansaf-jordan.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="v-dish11"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/brik-tunis.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
         </div>
@@ -257,17 +264,17 @@
         <div class="slide-header"><h2>3. مطابقة البلدان</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
         <p class="instruction">اسحب اسم الطبق إلى علم البلد المناسب:</p>
         <div class="draggables-bank" id="bank-3" ondragover="allowDrop(event)" ondrop="drop(event)">
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish1">التبولة</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish2">الملوخية</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish3">الطاجن</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish4">الكبسة</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish5">الهريس</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish6">المندي</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish7">المقلوبة</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish8">الكبة</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish9">الليلنجي</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish10">المنسف</div>
-          <div class="draggable" draggable="true" ondragstart="drag(event)" id="g-dish11">البريك</div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish1"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/taboula-lebanon.png" alt="التبولة" onerror="this.closest('.draggable').innerHTML='التبولة'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish2"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mloukhiya-egypt.png" alt="الملوخية" onerror="this.closest('.draggable').innerHTML='الملوخية'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish3"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/tajin-morocco.png" alt="الطاجن" onerror="this.closest('.draggable').innerHTML='الطاجن'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish4"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kabsa-saudi.png" alt="الكبسة" onerror="this.closest('.draggable').innerHTML='الكبسة'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish5"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/hriss-uae.png" alt="الهريس" onerror="this.closest('.draggable').innerHTML='الهريس'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish6"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mandi-yemen.png" alt="المندي" onerror="this.closest('.draggable').innerHTML='المندي'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish7"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/malouba-palestine.png" alt="المقلوبة" onerror="this.closest('.draggable').innerHTML='المقلوبة'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish8"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kebeh-algeria.png" alt="الكبة" onerror="this.closest('.draggable').innerHTML='الكبة'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish9"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yalanji-syria.png" alt="اليلنجي" onerror="this.closest('.draggable').innerHTML='اليلنجي'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish10"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mansaf-jordan.png" alt="المنسف" onerror="this.closest('.draggable').innerHTML='المنسف'"></div>
+          <div class="draggable image-draggable" draggable="true" ondragstart="drag(event)" id="g-dish11"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/brik-tunis.png" alt="البريك" onerror="this.closest('.draggable').innerHTML='البريك'"></div>
         </div>
         <div class="zones-wrapper">
           <div class="sort-zone" ondragover="allowDrop(event)" ondrop="drop(event)" data-target="g-dish1"><h3><img class="gh-img" src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/lebanon.png" onerror="this.style.display='none'"></h3><div class="dropped-items-container"></div></div>
@@ -290,17 +297,17 @@
         <div class="match-board-container" id="matchBoard">
           <svg id="match-svg"></svg>
           <div class="match-column">
-            <div class="match-item match-left" data-id="1">التبولة</div>
-            <div class="match-item match-left" data-id="2">الملوخية</div>
-            <div class="match-item match-left" data-id="3">الطاجن</div>
-            <div class="match-item match-left" data-id="4">الكبسة</div>
-            <div class="match-item match-left" data-id="5">الهريس</div>
-            <div class="match-item match-left" data-id="6">المندي</div>
-            <div class="match-item match-left" data-id="7">المقلوبة</div>
-            <div class="match-item match-left" data-id="8">الكبة</div>
-            <div class="match-item match-left" data-id="9">الليلنجي</div>
-            <div class="match-item match-left" data-id="10">المنسف</div>
-            <div class="match-item match-left" data-id="11">البريك</div>
+            <div class="match-item match-left image-match" data-id="1"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/taboula-lebanon.png" alt="التبولة" onerror="this.parentElement.textContent='التبولة'"></div>
+            <div class="match-item match-left image-match" data-id="2"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mloukhiya-egypt.png" alt="الملوخية" onerror="this.parentElement.textContent='الملوخية'"></div>
+            <div class="match-item match-left image-match" data-id="3"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/tajin-morocco.png" alt="الطاجن" onerror="this.parentElement.textContent='الطاجن'"></div>
+            <div class="match-item match-left image-match" data-id="4"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kabsa-saudi.png" alt="الكبسة" onerror="this.parentElement.textContent='الكبسة'"></div>
+            <div class="match-item match-left image-match" data-id="5"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/hriss-uae.png" alt="الهريس" onerror="this.parentElement.textContent='الهريس'"></div>
+            <div class="match-item match-left image-match" data-id="6"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mandi-yemen.png" alt="المندي" onerror="this.parentElement.textContent='المندي'"></div>
+            <div class="match-item match-left image-match" data-id="7"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/malouba-palestine.png" alt="المقلوبة" onerror="this.parentElement.textContent='المقلوبة'"></div>
+            <div class="match-item match-left image-match" data-id="8"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/kebeh-algeria.png" alt="الكبة" onerror="this.parentElement.textContent='الكبة'"></div>
+            <div class="match-item match-left image-match" data-id="9"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/yalanji-syria.png" alt="اليلنجي" onerror="this.parentElement.textContent='اليلنجي'"></div>
+            <div class="match-item match-left image-match" data-id="10"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/mansaf-jordan.png" alt="المنسف" onerror="this.parentElement.textContent='المنسف'"></div>
+            <div class="match-item match-left image-match" data-id="11"><img src="https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/brik-tunis.png" alt="البريك" onerror="this.parentElement.textContent='البريك'"></div>
           </div>
           <div class="match-column">
             <div class="match-item match-right" data-target="8">الجزائر 🇩🇿</div>
@@ -489,6 +496,11 @@
             <span style="background: #F59E0B; color: white; padding: 4px 16px; border-radius: 99px; font-size: 15px; font-weight: bold;">النقاط: <span id="puzzle-total-score">0</span></span>
           </div>
 
+          <div class="puzzle-hint-wrap">
+            <img id="puzzle-hint-image" class="puzzle-hint-thumb" src="" alt="تلميح صورة الطبق" style="display:none;">
+            <div id="puzzle-hint-text" style="background:#EFF6FF; color: var(--secondary); padding: 10px 16px; border-radius: 12px; font-weight: bold;">تلميح: شاهد الصورة المصغّرة ثم كوّنها بالقطع.</div>
+          </div>
+
           <div style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
             <div>
               <p style="font-weight: bold; color: #64748B; margin: 0 0 8px;">قطع البازل</p>
@@ -587,8 +599,31 @@
         globalAudio.play().catch(e => console.log('Audio error:', e));
     }
 
+    const audioFileMap = {
+        'tabouleh': 'tabouleh',
+        'mloukhiyeh': 'mloukhiyeh',
+        'tajine': 'tajin',
+        'tajin': 'tajin',
+        'yalamji': 'yalanji',
+        'yalanji': 'yalanji',
+        'malouba': 'maklouba',
+        'maklouba': 'maklouba',
+        'kebeh': 'kouba',
+        'kouba': 'kouba',
+        'koubba': 'kouba',
+        'brik': 'brik',
+        'mandi': 'mandi',
+        'harees': 'hariss',
+        'hariss': 'hariss',
+        'kabsa': 'kabssa',
+        'kabssa': 'kabssa',
+        'mansaf': 'mansaf'
+    };
+
     function playGithubAudio(fileName) {
-        globalAudio.src = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${fileName}.mp3`;
+        const resolvedFile = audioFileMap[fileName] || fileName;
+        globalAudio.onerror = () => console.log('Audio failed:', resolvedFile);
+        globalAudio.src = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${resolvedFile}.mp3`;
         globalAudio.play().catch(e => console.log(e));
     }
 
@@ -647,8 +682,8 @@
     function getGithubFoodImageUrl(dishId) {
         const map = {
             "tabouleh": "taboula-lebanon.png", "mloukhiyeh": "mloukhiya-egypt.png", "tajine": "tajin-morocco.png",
-            "kabsa": "kabsa-saudi.png", "harees": "harees-uae.png", "mandi": "mandi-yemen.png",
-            "malouba": "malouba-palestine.png", "kebeh": "kebeh-algeria.png", "yalamji": "yalamji-syria.png",
+            "kabsa": "kabsa-saudi.png", "harees": "hriss-uae.png", "mandi": "mandi-yemen.png",
+            "malouba": "malouba-palestine.png", "kebeh": "kebeh-algeria.png", "yalamji": "yalanji-syria.png",
             "mansaf": "mansaf-jordan.png", "brik": "brik-tunis.png"
         };
         return map[dishId] ? `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${map[dishId]}` : null;
@@ -736,7 +771,14 @@
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
         var draggedElement = document.getElementById(data);
+        if (!draggedElement) return;
+
         var targetContainer = ev.target.closest('.dropped-items-container') || ev.target.closest('.draggables-bank');
+        if (!targetContainer) {
+            var sortZone = ev.target.closest('.sort-zone');
+            if (sortZone) targetContainer = sortZone.querySelector('.dropped-items-container');
+        }
+
         if (targetContainer) targetContainer.appendChild(draggedElement);
     }
 
@@ -1065,6 +1107,7 @@
             btn.style.fontSize = '26px';
             btn.style.padding = '12px 24px';
             btn.style.cursor = 'pointer';
+            btn.style.fontFamily = '"Almarai", sans-serif';
             btn.onclick = () => selectLetterForRearrange(l, btn, targetObj);
             lettersDiv.appendChild(btn);
         });
@@ -1079,6 +1122,7 @@
         ansBtn.className = 'draggable';
         ansBtn.style.fontSize = '26px';
         ansBtn.style.padding = '12px 24px';
+        ansBtn.style.fontFamily = '"Almarai", sans-serif';
         
         ansBtn.onclick = () => {
             ansBtn.remove();
@@ -1167,11 +1211,14 @@
     }
 
     function initPuzzleActivity() {
-        currentPuzzleIndex = 0;
-        puzzleTotalScore = 0;
-        puzzleCompletedSet.clear();
-        document.getElementById('puzzle-total-score').textContent = 0;
-        loadPuzzleGame(0);
+        if (!window.puzzleActivityInitialized) {
+            currentPuzzleIndex = 0;
+            puzzleTotalScore = 0;
+            puzzleCompletedSet.clear();
+            document.getElementById('puzzle-total-score').textContent = 0;
+            window.puzzleActivityInitialized = true;
+        }
+        loadPuzzleGame(currentPuzzleIndex);
     }
 
     function loadPuzzleGame(index) {
@@ -1183,6 +1230,9 @@
         document.getElementById('puzzle-counter').textContent = `${index + 1} / ${puzzleItems.length}`;
         document.getElementById('puzzle-success').style.display = 'none';
         document.getElementById('puzzle-piece-score').textContent = 0;
+        const hintImg = document.getElementById('puzzle-hint-image');
+        hintImg.src = imgUrl;
+        hintImg.style.display = 'block';
 
         // Shuffle piece IDs
         const ids = Array.from({length: total}, (_, i) => i);
@@ -1218,6 +1268,9 @@
         div.style.backgroundImage = `url(${imgUrl})`;
         div.style.backgroundSize = `${PUZZLE_COLS * PUZZLE_PIECE_SIZE}px ${PUZZLE_ROWS * PUZZLE_PIECE_SIZE}px`;
         div.style.backgroundPosition = `-${col * PUZZLE_PIECE_SIZE}px -${row * PUZZLE_PIECE_SIZE}px`;
+        div.style.backgroundRepeat = 'no-repeat';
+        div.style.backgroundOrigin = 'content-box';
+        div.style.direction = 'ltr';
         div.addEventListener('dragstart', () => { draggedPieceEl = div; });
         div.addEventListener('dragend',   () => { draggedPieceEl = null; });
         return div;
