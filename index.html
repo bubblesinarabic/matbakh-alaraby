@@ -55,6 +55,11 @@
     .popup-img { width: 120px; height: 120px; background: #E2E8F0; border-radius: 12px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #94A3B8; overflow: hidden;}
     .popup-img img { width: 100%; height: 100%; object-fit: cover; }
     .popup-word { font-size: 28px; color: var(--secondary); font-weight: bold; margin-bottom: 10px; }
+    .puzzle-piece { width: 100px; height: 100px; cursor: grab; box-sizing: border-box; border: 2px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+    .puzzle-piece:active { cursor: grabbing; opacity: 0.7; }
+    .puzzle-piece.correct { border: 3px solid #22C55E; cursor: default; pointer-events: none; }
+    .puzzle-slot { width: 100px; height: 100px; background: #E2E8F0; display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 1px solid #CBD5E1; }
+    .puzzle-slot.drag-over { outline: 3px solid var(--primary); outline-offset: -3px; background: #DBEAFE; }
     .match-board-container { position: relative; display: flex; justify-content: space-between; padding: 20px; margin-top: 10px; background: #F8FAFC; border-radius: 16px; border: 2px solid #E2E8F0; user-select: none;}
     .match-column { display: flex; flex-direction: column; gap: 15px; z-index: 2;}
     .match-item { background: white; border: 3px solid var(--primary); padding: 12px 20px; border-radius: 12px; font-size: 18px; font-weight: bold; color: var(--text-dark); cursor: pointer; text-align: center; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s;}
@@ -162,7 +167,7 @@
           <button class="menu-btn" onclick="goToSlide(8)"><i data-lucide="edit-3"></i> 8. املأ الفراغ</button>
           <button class="menu-btn" onclick="goToSlide(9)"><i data-lucide="target"></i> 9. فرقعة الفقاعات</button>
           <button class="menu-btn" style="border-color: var(--primary); background: #F0FDF4;" onclick="goToSlide(10)"><i data-lucide="spell-check"></i> 10. رتب الحروف</button>
-          <button class="menu-btn" style="border-color: var(--secondary); background: #FFF7ED;" onclick="goToSlide(11)"><i data-lucide="image"></i> 11. صور الأطباق</button>
+          <button class="menu-btn" style="border-color: var(--secondary); background: #FFF7ED;" onclick="goToSlide(11)"><i data-lucide="puzzle"></i> 11. لعبة البازل</button>
         </div>
 
         <button class="nav-btn" onclick="goToSlide(12)" style="width: 100%; margin-top: 25px; font-size: 20px; background: #F59E0B; padding: 15px;"><i data-lucide="award" style="margin-left: 8px;"></i> إنهاء وعرض الشهادة النهائية</button>
@@ -473,20 +478,33 @@
       </div>
 
       <div class="slide" id="slide-11">
-        <div class="slide-header"><h2>11. صور الأطباق</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
-        <p class="instruction">تأمَّل صور الأطباق العربية الأصيلة واضغط على الصورة للانتقال إلى التالية:</p>
+        <div class="slide-header"><h2>11. لعبة البازل</h2><button class="back-menu-btn" onclick="goToSlide(0)"><i data-lucide="home"></i></button></div>
+        <p class="instruction">اسحب قطع الصورة وضعها في المكان الصحيح لتكتمل الصورة:</p>
 
-        <div style="background: #F8FAFC; padding: 20px; border-radius: 16px; border: 2px solid #E2E8F0; text-align: center;">
-          <div id="puzzle-name-display" style="font-size: 28px; font-weight: bold; color: var(--primary); margin-bottom: 15px;"></div>
-          <div style="position: relative; display: inline-block; cursor: pointer;" onclick="nextPuzzle()">
-            <img id="puzzle-img" src="" alt="" style="max-width: 100%; max-height: 420px; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); display: block;">
+        <div style="background: #F8FAFC; padding: 16px; border-radius: 16px; border: 2px solid #E2E8F0; text-align: center;">
+          <div id="puzzle-title" style="font-size: 26px; font-weight: bold; color: var(--primary); margin-bottom: 6px;"></div>
+          <div id="puzzle-counter" style="font-size: 16px; color: #64748B; margin-bottom: 14px;"></div>
+
+          <div style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+              <p style="font-weight: bold; color: #64748B; margin: 0 0 8px;">قطع البازل</p>
+              <div id="puzzle-bank"
+                   style="display: grid; grid-template-columns: repeat(3, 100px); gap: 4px; background: #F1F5F9; padding: 8px; border-radius: 12px; min-height: 316px; border: 2px dashed #CBD5E1;"
+                   ondragover="event.preventDefault()" ondrop="puzzleDropToBank(event)"></div>
+            </div>
+            <div>
+              <p style="font-weight: bold; color: #64748B; margin: 0 0 8px;">ضع القطع هنا</p>
+              <div id="puzzle-grid" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 0; border-radius: 10px; overflow: hidden; border: 2px solid #CBD5E1;"></div>
+            </div>
           </div>
-          <div style="margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+
+          <div id="puzzle-success" style="display: none; margin-top: 14px; padding: 14px; background: #F0FDF4; border-radius: 12px; border: 2px solid #22C55E; font-size: 22px; color: #16A34A; font-weight: bold;">أحسنت! اكتملت الصورة! 🎉</div>
+
+          <div style="margin-top: 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
             <button class="audio-btn-inline" onclick="prevPuzzle()"><i data-lucide="arrow-right"></i> السابق</button>
-            <span id="puzzle-counter" style="align-self: center; font-size: 18px; color: #64748B;"></span>
+            <button class="audio-btn-inline" onclick="shuffleCurrentPuzzle()" style="background:#F1F5F9; color:#475569; border:2px solid #CBD5E1;"><i data-lucide="shuffle"></i> خلط</button>
             <button class="audio-btn-inline" onclick="nextPuzzle()"><i data-lucide="arrow-left"></i> التالي</button>
           </div>
-          <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px;" id="puzzle-dots-row"></div>
         </div>
 
         <button class="nav-btn" onclick="goToSlide(12)" style="width: 100%; margin-top: 20px; font-size: 20px; background: #F59E0B;"><i data-lucide="award" style="margin-left: 8px;"></i> الانتقال للشهادة النهائية</button>
@@ -1112,44 +1130,113 @@
     ];
     let currentPuzzleIndex = 0;
 
+    const PUZZLE_COLS = 3, PUZZLE_ROWS = 3, PUZZLE_PIECE_SIZE = 100;
+    let draggedPieceEl = null;
+
     function initPuzzleActivity() {
         currentPuzzleIndex = 0;
-        renderPuzzle();
-        const dotsRow = document.getElementById('puzzle-dots-row');
-        if (dotsRow) {
-            dotsRow.innerHTML = '';
-            puzzleItems.forEach((_, i) => {
-                const d = document.createElement('div');
-                d.className = 'dot';
-                d.id = 'pdot-' + i;
-                d.style.cursor = 'pointer';
-                d.onclick = () => { currentPuzzleIndex = i; renderPuzzle(); };
-                dotsRow.appendChild(d);
-            });
+        loadPuzzleGame(0);
+    }
+
+    function loadPuzzleGame(index) {
+        const item = puzzleItems[index];
+        const imgUrl = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${item.file}`;
+        const total = PUZZLE_COLS * PUZZLE_ROWS;
+
+        document.getElementById('puzzle-title').textContent = item.name;
+        document.getElementById('puzzle-counter').textContent = `${index + 1} / ${puzzleItems.length}`;
+        document.getElementById('puzzle-success').style.display = 'none';
+
+        // Shuffle piece IDs
+        const ids = Array.from({length: total}, (_, i) => i);
+        for (let i = ids.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [ids[i], ids[j]] = [ids[j], ids[i]];
+        }
+
+        // Render bank with shuffled pieces
+        const bank = document.getElementById('puzzle-bank');
+        bank.innerHTML = '';
+        ids.forEach(id => bank.appendChild(makePuzzlePiece(id, imgUrl)));
+
+        // Render empty slots
+        const grid = document.getElementById('puzzle-grid');
+        grid.innerHTML = '';
+        for (let i = 0; i < total; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'puzzle-slot';
+            slot.dataset.slotId = i;
+            slot.addEventListener('dragover', e => { e.preventDefault(); slot.classList.add('drag-over'); });
+            slot.addEventListener('dragleave', () => slot.classList.remove('drag-over'));
+            slot.addEventListener('drop', e => puzzleDropToSlot(e, slot));
+            grid.appendChild(slot);
         }
     }
 
-    function renderPuzzle() {
-        const item = puzzleItems[currentPuzzleIndex];
-        const img = document.getElementById('puzzle-img');
-        const nameEl = document.getElementById('puzzle-name-display');
-        const counter = document.getElementById('puzzle-counter');
-        if (img) img.src = `https://raw.githubusercontent.com/bubblesinarabic/matbakh-alaraby/main/${item.file}`;
-        if (nameEl) nameEl.textContent = item.name;
-        if (counter) counter.textContent = `${currentPuzzleIndex + 1} / ${puzzleItems.length}`;
-        document.querySelectorAll('#puzzle-dots-row .dot').forEach((d, i) => {
-            d.classList.toggle('active', i === currentPuzzleIndex);
-        });
+    function makePuzzlePiece(id, imgUrl) {
+        const col = id % PUZZLE_COLS;
+        const row = Math.floor(id / PUZZLE_COLS);
+        const div = document.createElement('div');
+        div.className = 'puzzle-piece';
+        div.draggable = true;
+        div.dataset.pieceId = id;
+        div.style.backgroundImage = `url(${imgUrl})`;
+        div.style.backgroundSize = `${PUZZLE_COLS * PUZZLE_PIECE_SIZE}px ${PUZZLE_ROWS * PUZZLE_PIECE_SIZE}px`;
+        div.style.backgroundPosition = `-${col * PUZZLE_PIECE_SIZE}px -${row * PUZZLE_PIECE_SIZE}px`;
+        div.addEventListener('dragstart', () => { draggedPieceEl = div; });
+        div.addEventListener('dragend',   () => { draggedPieceEl = null; });
+        return div;
     }
+
+    function puzzleDropToSlot(e, slot) {
+        e.preventDefault();
+        slot.classList.remove('drag-over');
+        if (!draggedPieceEl) return;
+
+        const sourceParent = draggedPieceEl.parentElement;
+        const existingPiece = slot.querySelector('.puzzle-piece');
+
+        if (existingPiece && existingPiece !== draggedPieceEl) {
+            // Swap: send existing piece back where the dragged piece came from
+            sourceParent.appendChild(existingPiece);
+        }
+        slot.appendChild(draggedPieceEl);
+        checkPuzzleComplete();
+    }
+
+    function puzzleDropToBank(e) {
+        e.preventDefault();
+        if (!draggedPieceEl) return;
+        document.getElementById('puzzle-bank').appendChild(draggedPieceEl);
+    }
+
+    function checkPuzzleComplete() {
+        const slots = document.querySelectorAll('#puzzle-grid .puzzle-slot');
+        let allCorrect = true;
+        slots.forEach(slot => {
+            const piece = slot.querySelector('.puzzle-piece');
+            if (!piece || parseInt(piece.dataset.pieceId) !== parseInt(slot.dataset.slotId)) {
+                allCorrect = false;
+            }
+        });
+        if (allCorrect) {
+            document.querySelectorAll('#puzzle-grid .puzzle-piece').forEach(p => p.classList.add('correct'));
+            document.getElementById('puzzle-success').style.display = 'block';
+            playFeedbackAudio(true);
+            awardPoints('puzzle-' + currentPuzzleIndex, 10);
+        }
+    }
+
+    function shuffleCurrentPuzzle() { loadPuzzleGame(currentPuzzleIndex); }
 
     function nextPuzzle() {
         currentPuzzleIndex = (currentPuzzleIndex + 1) % puzzleItems.length;
-        renderPuzzle();
+        loadPuzzleGame(currentPuzzleIndex);
     }
 
     function prevPuzzle() {
         currentPuzzleIndex = (currentPuzzleIndex - 1 + puzzleItems.length) % puzzleItems.length;
-        renderPuzzle();
+        loadPuzzleGame(currentPuzzleIndex);
     }
 
     // -- دوال رفع صورة / التقاط كاميرا / وتحميل الشهادة --
